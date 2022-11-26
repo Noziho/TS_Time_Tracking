@@ -1,9 +1,17 @@
 import '../styles/style.scss';
 import {Project} from "./Project";
 
-console.log("Loaded TS");
 
 
-let test: Project = new Project('test') as Project;
+let test = new Project();
+test.createProject();
 
-console.log(test);
+/**
+ * window.onunload = function() {
+ *     localStorage.setItem("TEST", "register on close 22233322");
+ * }
+ */
+
+
+console.log(localStorage);
+

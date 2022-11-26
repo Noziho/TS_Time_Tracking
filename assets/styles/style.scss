@@ -15,4 +15,28 @@ body {
   background: vars.$bg-color;
 }
 
+%container {
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.container {
+  @extend %container;
+  align-items: center;
+  justify-content: center;
+
+  .projects_container {
+    width: 90%;
+    border: 2px solid red;
+    min-height: 40rem;
+  }
+}
+
+.project {
+  width: 30%;
+  min-height: 25rem;
+  border: 2px solid darkblue;
+}
+
 
