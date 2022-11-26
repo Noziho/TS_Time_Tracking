@@ -23,7 +23,10 @@ export class Project {
                 project.title = inputForTitle.value;
 
                 allProjectArray.push(project);
-                console.log(allProjectArray);
+
+                localStorage.setItem("Projects", JSON.stringify(allProjectArray));
+
+                console.log(localStorage);
             }
             else {
 
