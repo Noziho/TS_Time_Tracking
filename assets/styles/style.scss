@@ -28,15 +28,22 @@ body {
 
   .projects_container {
     width: 90%;
-    border: 2px solid red;
+    display: flex;
+    flex-flow: row wrap;
     min-height: 40rem;
+
+    h2 {
+      width: 100%;
+    }
   }
 }
 
 .project {
   width: 30%;
   min-height: 25rem;
-  border: 2px solid darkblue;
+  background: darken(vars.$bg-color, 5%);
+  word-break: break-all;
+  padding: 1rem;
 }
 
 

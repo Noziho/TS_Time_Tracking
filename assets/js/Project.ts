@@ -1,15 +1,17 @@
 import * as process from "process";
+import {Display} from "./Display";
 
 export class Project {
 
     private allProjects: Project[] = [];
-    private title:string = "";
+    public title:string = "";
 
     public createProject ():void {
 
+        let inputContainer: HTMLDivElement = document.querySelector('.createProjectContainer') as HTMLDivElement;
+
         let buttonAddProject: HTMLButtonElement = document.createElement("button")as  HTMLButtonElement;
         buttonAddProject.innerHTML = "Add project";
-
 
         buttonAddProject.addEventListener("click", (e: MouseEvent) => {
             let inputForTitle: HTMLInputElement = document.querySelector("input") as HTMLInputElement;
@@ -25,6 +27,7 @@ export class Project {
                 allProjectArray.push(project);
 
                 localStorage.setItem("Projects", JSON.stringify(allProjectArray));
+                inputForTitle.value = "";
 
                 console.log(localStorage);
             }
@@ -36,12 +39,13 @@ export class Project {
                 this.allProjects.push(project);
 
                 localStorage.setItem("Projects", JSON.stringify(this.allProjects));
+                inputForTitle.value = "";
 
                 console.log(localStorage);
             }
         })
 
-        document.body.append(buttonAddProject);
+        inputContainer.append(buttonAddProject);
 
     }
 
