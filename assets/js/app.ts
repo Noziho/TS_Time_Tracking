@@ -1,8 +1,6 @@
 import '../styles/style.scss';
 import {Project} from "./Project";
 import {Display} from "./Display";
-import {Tasks} from "./Tasks";
-
 
 
 
@@ -18,7 +16,6 @@ display.displayProjectFromLocalStorage();
  *     localStorage.setItem("TEST", "register on close 22233322");
  * }
  */
-
 
 console.log(localStorage);
 
