@@ -2,30 +2,26 @@ import {Project} from "./Project";
 
 export class Display {
 
-    public displayProjectFromLocalStorage () {
+    public displayProjectFromLocalStorage() {
+
+        let allProjectsString: string = localStorage.getItem("Projects") as string;
+        let allProjectArray = JSON.parse(allProjectsString);
 
         let allProjectsContainer: HTMLDivElement = document.querySelector(".projects_container") as HTMLDivElement;
 
-        //Get all project from local storage.
-        if (localStorage.getItem("Projects")) {
-            let stringProjects: string = localStorage.getItem("Projects") as string;
-            let arrayProjects: Project[] = JSON.parse(stringProjects);
+        allProjectArray.forEach((element: Project) => {
 
+            let projectContainer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
+            projectContainer.className = "project margin-2";
 
-            arrayProjects.reverse().forEach((element: Project) => {
+            let titleProject: HTMLHeadingElement = document.createElement("h2") as HTMLHeadingElement;
+            titleProject.innerHTML = element.title;
 
-                let projectContainer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
-                projectContainer.className = "project margin-2";
+            projectContainer.append(titleProject);
 
-                let titleProject: HTMLHeadingElement = document.createElement("h2") as HTMLHeadingElement;
-                titleProject.innerHTML = element.title;
+            allProjectsContainer.prepend(projectContainer);
 
-                projectContainer.append(titleProject);
-
-                allProjectsContainer.append(projectContainer);
-
-            })
-        }
+        })
 
 
     }

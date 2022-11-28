@@ -1,4 +1,3 @@
-import * as process from "process";
 import {Display} from "./Display";
 
 export class Project {
@@ -17,8 +16,8 @@ export class Project {
             let inputForTitle: HTMLInputElement = document.querySelector("input") as HTMLInputElement;
 
             if (localStorage.getItem("Projects")) {
+
                 let allProjectsString: string = localStorage.getItem("Projects") as string;
-                console.log(typeof allProjectsString);
                 let allProjectArray = JSON.parse(allProjectsString);
 
                 let project: Project = new Project();
@@ -29,7 +28,8 @@ export class Project {
                 localStorage.setItem("Projects", JSON.stringify(allProjectArray));
                 inputForTitle.value = "";
 
-                console.log(localStorage);
+                location.reload();
+
             }
             else {
 
@@ -41,7 +41,8 @@ export class Project {
                 localStorage.setItem("Projects", JSON.stringify(this.allProjects));
                 inputForTitle.value = "";
 
-                console.log(localStorage);
+                location.reload();
+
             }
         })
 
