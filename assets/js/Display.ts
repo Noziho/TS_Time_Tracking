@@ -1,4 +1,5 @@
 import {Project} from "./Project";
+import {Tasks} from "./Tasks";
 
 export class Display {
 
@@ -18,6 +19,7 @@ export class Display {
             titleProject.innerHTML = element.title;
 
             projectContainer.append(titleProject);
+            projectContainer.append(new Tasks().taskButton(projectContainer));
 
             allProjectsContainer.prepend(projectContainer);
 

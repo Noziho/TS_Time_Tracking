@@ -1,11 +1,12 @@
-import {Display} from "./Display";
+import {Tasks} from "./Tasks";
 
 export class Project {
 
     private allProjects: Project[] = [];
+    private allTasks: Tasks[] = [];
     public title:string = "";
 
-    public createProject ():void {
+    public createButtonProject ():void {
 
         let inputContainer: HTMLDivElement = document.querySelector('.createProjectContainer') as HTMLDivElement;
 
@@ -49,6 +50,5 @@ export class Project {
         inputContainer.append(buttonAddProject);
 
     }
-
 
 }
