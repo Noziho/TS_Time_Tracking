@@ -36,7 +36,8 @@ export class Display {
                 const titleOfTask: HTMLParagraphElement = document.createElement("p") as HTMLParagraphElement;
                 titleOfTask.innerHTML = inputForNameTask.value;
 
-                element.tasks = [inputForNameTask.value];
+
+                element.tasks.push(inputForNameTask.value);
 
                 taskContainer.append(titleOfTask);
                 projectContainer.append(taskContainer);
