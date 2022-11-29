@@ -1,4 +1,5 @@
 import {Project} from "./Project";
+import {Timer} from "./Timer";
 
 export class Display {
 
@@ -16,7 +17,7 @@ export class Display {
              */
 
             let projectContainer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
-            projectContainer.className = "project margin-2";
+            projectContainer.className = "project padding-1 margin-2";
 
             let titleProject: HTMLHeadingElement = document.createElement("h2") as HTMLHeadingElement;
             titleProject.innerHTML = element.title;
@@ -24,7 +25,6 @@ export class Display {
 
             /**
              * Create task button
-             * TODO// move it to Project.ts ??
              */
             const inputForNameTask = document.createElement("input");
 
@@ -32,28 +32,50 @@ export class Display {
             addTaskButton.innerHTML = "addTask";
             addTaskButton.addEventListener("click", (e: MouseEvent) => {
 
+                element.tasks.push(inputForNameTask.value);
+                /**
+                 * Display the task on click.
+                 */
+
                 const taskContainer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
+                taskContainer.className = "task padding-1 margin-top-1";
+
                 const titleOfTask: HTMLParagraphElement = document.createElement("p") as HTMLParagraphElement;
                 titleOfTask.innerHTML = inputForNameTask.value;
-
-
-                element.tasks.push(inputForNameTask.value);
 
                 taskContainer.append(titleOfTask);
                 projectContainer.append(taskContainer);
 
-                console.log(allProjectArray);
+                const timer: Timer = new Timer() as Timer;
+                timer.TimerButton(taskContainer);
+
                 localStorage.setItem("Projects", JSON.stringify(allProjectArray));
             })
+
 
             projectContainer.append(titleProject);
             projectContainer.append(inputForNameTask);
             projectContainer.append(addTaskButton);
             allProjectsContainer.prepend(projectContainer);
 
+            /**
+             * Display all task from all project when the page is loading.
+             */
+            element.tasks.forEach((e) => {
+                const taskContainer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
+                taskContainer.className = "task padding-1 margin-top-1";
+
+                const titleOfTask: HTMLParagraphElement = document.createElement("p") as HTMLParagraphElement;
+                titleOfTask.innerHTML = e;
+
+                taskContainer.append(titleOfTask);
+                projectContainer.append(taskContainer);
+
+                const timer: Timer = new Timer() as Timer;
+                timer.TimerButton(taskContainer);
+            })
+
         })
-
-
 
 
     }

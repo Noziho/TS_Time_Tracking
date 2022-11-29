@@ -41,9 +41,20 @@ body {
 .project {
   width: 30%;
   min-height: 25rem;
+  max-height: 25rem;
   background: darken(vars.$bg-color, 5%);
   word-break: break-all;
   padding: 1rem;
+  overflow: scroll;
 }
+
+.task {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: darken(vars.$bg-color, 10%);
+}
+
 
 
