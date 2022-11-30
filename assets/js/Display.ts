@@ -20,7 +20,25 @@ export class Display {
             projectContainer.className = "project padding-1 margin-2";
 
             let titleProject: HTMLHeadingElement = document.createElement("h2") as HTMLHeadingElement;
-            titleProject.innerHTML = element.title;
+            if (typeof element.title === "string") {
+                titleProject.innerHTML = element.title;
+            }
+
+            /**
+             * Display deletion button
+             */
+
+            let deletionButton: HTMLButtonElement = document.createElement("button") as HTMLButtonElement;
+            deletionButton.innerHTML = "Delete project"
+
+            deletionButton.addEventListener("click", (e: MouseEvent) => {
+                element.title = null;
+                if (element.tasks) {
+                    element.tasks.splice(0, element.tasks.length)
+                    localStorage.setItem("Projects", JSON.stringify(allProjectArray));
+                }
+                projectContainer.remove();
+            })
 
 
             /**
@@ -32,7 +50,10 @@ export class Display {
             addTaskButton.innerHTML = "addTask";
             addTaskButton.addEventListener("click", (e: MouseEvent) => {
 
-                element.tasks.push(inputForNameTask.value);
+                if (element.tasks) {
+                    element.tasks.push(inputForNameTask.value);
+                }
+
                 /**
                  * Display the task on click.
                  */
@@ -56,25 +77,31 @@ export class Display {
             projectContainer.append(titleProject);
             projectContainer.append(inputForNameTask);
             projectContainer.append(addTaskButton);
+            projectContainer.append(deletionButton);
             allProjectsContainer.prepend(projectContainer);
 
             /**
              * Display all task from all project when the page is loading.
              */
-            element.tasks.forEach((e) => {
-                const taskContainer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
-                taskContainer.className = "task padding-1 margin-top-1";
 
-                const titleOfTask: HTMLParagraphElement = document.createElement("p") as HTMLParagraphElement;
-                titleOfTask.innerHTML = e;
+            if (element.tasks) {
+                if (element.title === null) {
+                    projectContainer.remove();
+                }
+                element.tasks.forEach((e) => {
+                    const taskContainer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
+                    taskContainer.className = "task padding-1 margin-top-1";
 
-                taskContainer.append(titleOfTask);
-                projectContainer.append(taskContainer);
+                    const titleOfTask: HTMLParagraphElement = document.createElement("p") as HTMLParagraphElement;
+                    titleOfTask.innerHTML = e;
 
-                const timer: Timer = new Timer() as Timer;
-                timer.TimerButton(taskContainer);
-            })
+                    taskContainer.append(titleOfTask);
+                    projectContainer.append(taskContainer);
 
+                    const timer: Timer = new Timer() as Timer;
+                    timer.TimerButton(taskContainer);
+                })
+            }
         })
 
 

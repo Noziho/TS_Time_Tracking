@@ -1,8 +1,8 @@
 export class Project {
 
     private allProjects: Project[] = [];
-    public tasks :string[] = [];
-    public title:string = "";
+    public tasks :string [] | null = [];
+    public title:string | null = "";
 
     public createButtonProject ():void {
 
@@ -48,5 +48,4 @@ export class Project {
         inputContainer.append(buttonAddProject);
 
     }
-
 }
