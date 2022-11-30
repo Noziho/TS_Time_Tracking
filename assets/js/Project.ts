@@ -1,7 +1,9 @@
+import {Tasks} from "./Tasks";
+
 export class Project {
 
     private allProjects: Project[] = [];
-    public tasks :string [] | null = [];
+    public tasks : Tasks [] | null = [];
     public title:string | null = "";
 
     public createButtonProject ():void {

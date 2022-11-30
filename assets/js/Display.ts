@@ -1,5 +1,6 @@
 import {Project} from "./Project";
 import {Timer} from "./Timer";
+import {Tasks} from "./Tasks";
 
 export class Display {
 
@@ -41,44 +42,11 @@ export class Display {
             })
 
 
-            /**
-             * Create task button
-             */
-            const inputForNameTask = document.createElement("input");
-
-            const addTaskButton: HTMLButtonElement = document.createElement("button") as HTMLButtonElement;
-            addTaskButton.innerHTML = "addTask";
-            addTaskButton.addEventListener("click", (e: MouseEvent) => {
-
-                if (element.tasks) {
-                    element.tasks.push(inputForNameTask.value);
-                }
-
-                /**
-                 * Display the task on click.
-                 */
-
-                const taskContainer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
-                taskContainer.className = "task padding-1 margin-top-1";
-
-                const titleOfTask: HTMLParagraphElement = document.createElement("p") as HTMLParagraphElement;
-                titleOfTask.innerHTML = inputForNameTask.value;
-
-                taskContainer.append(titleOfTask);
-                projectContainer.append(taskContainer);
-
-                const timer: Timer = new Timer() as Timer;
-                timer.TimerButton(taskContainer);
-
-                localStorage.setItem("Projects", JSON.stringify(allProjectArray));
-            })
-
-
             projectContainer.append(titleProject);
-            projectContainer.append(inputForNameTask);
-            projectContainer.append(addTaskButton);
             projectContainer.append(deletionButton);
             allProjectsContainer.prepend(projectContainer);
+            let task = new Tasks();
+            task.createTask(allProjectArray, element, projectContainer);
 
             /**
              * Display all task from all project when the page is loading.
@@ -93,13 +61,14 @@ export class Display {
                     taskContainer.className = "task padding-1 margin-top-1";
 
                     const titleOfTask: HTMLParagraphElement = document.createElement("p") as HTMLParagraphElement;
-                    titleOfTask.innerHTML = e;
+                    titleOfTask.innerHTML = e.title;
 
                     taskContainer.append(titleOfTask);
                     projectContainer.append(taskContainer);
 
                     const timer: Timer = new Timer() as Timer;
                     timer.TimerButton(taskContainer);
+
                 })
             }
         })
