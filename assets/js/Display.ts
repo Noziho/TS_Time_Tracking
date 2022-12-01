@@ -84,7 +84,7 @@ export class Display {
                     projectContainer.append(taskContainer);
 
                     const timer: Timer = new Timer() as Timer;
-                    timer.TimerButton(taskContainer, element, titleOfTask);
+                    timer.TimerButton(taskContainer, element, titleOfTask, allProjectArray);
 
                 })
             }

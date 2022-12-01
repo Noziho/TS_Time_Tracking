@@ -16,3 +16,5 @@ display.displayProjectFromLocalStorage();
  *     localStorage.setItem("TEST", "register on close 22233322");
  * }
  */
+
+console.log(JSON.parse(localStorage.getItem("Projects")as string));

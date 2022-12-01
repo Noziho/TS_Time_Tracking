@@ -5,7 +5,7 @@ export class Timer {
 
     public totalTimeTask: string [] = [];
 
-    public TimerButton (containerForButton : HTMLDivElement, project: any, taskTitle: HTMLParagraphElement):void {
+    public TimerButton (containerForButton : HTMLDivElement, project: any, taskTitle: HTMLParagraphElement, allProjectArray: Project[]):void {
 
         const containerTimer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
         containerTimer.className = "containerTimer";
@@ -49,9 +49,10 @@ export class Timer {
                     let task = new Tasks();
                     task.title = taskTitle.innerHTML;
                     task.totalTime = totalTime.innerHTML;
-                    project.tasks = [];
+                    project.tasks.splice(project, 1);
                     project.tasks.push(task);
-                    console.log(project.tasks)
+
+                    localStorage.setItem("Projects", JSON.stringify(allProjectArray));
                 }
             })
         })

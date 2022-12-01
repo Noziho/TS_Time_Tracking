@@ -32,7 +32,7 @@ export class Tasks {
             taskContainer.append(titleOfTask);
             projectContainer.append(taskContainer);
 
-            timer.TimerButton(taskContainer, element, titleOfTask);
+            timer.TimerButton(taskContainer, element, titleOfTask, allProjectArray);
 
             localStorage.setItem("Projects", JSON.stringify(allProjectArray));
         })
