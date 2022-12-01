@@ -5,13 +5,7 @@ export class Tasks {
     public title:string = "";
     public totalTime:string = "";
 
-    public createTask (allProjectArray: Project[],element: Project, projectContainer: HTMLDivElement, totalTime: string = "") {
-
-        const inputForNameTask = document.createElement("input");
-
-        const addTaskButton: HTMLButtonElement = document.createElement("button") as HTMLButtonElement;
-        addTaskButton.innerHTML = "addTask";
-
+    public createTask (allProjectArray: Project[],element: Project, projectContainer: HTMLDivElement, inputForNameTask: HTMLInputElement, addTaskButton: HTMLButtonElement, totalTime: string = "") {
 
         addTaskButton.addEventListener("click", (e: MouseEvent) => {
 
@@ -19,8 +13,8 @@ export class Tasks {
             if (element.tasks) {
                 let task = new Tasks();
                 task.title = inputForNameTask.value;
+                task.totalTime = totalTime;
                 element.tasks.push(task);
-                this.totalTime = totalTime;
             }
 
             /**
@@ -38,11 +32,10 @@ export class Tasks {
             taskContainer.append(titleOfTask);
             projectContainer.append(taskContainer);
 
-            timer.TimerButton(taskContainer);
+            timer.TimerButton(taskContainer, element, titleOfTask);
 
             localStorage.setItem("Projects", JSON.stringify(allProjectArray));
         })
-
 
         projectContainer.append(inputForNameTask);
         projectContainer.append(addTaskButton);

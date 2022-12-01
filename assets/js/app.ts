@@ -16,6 +16,3 @@ display.displayProjectFromLocalStorage();
  *     localStorage.setItem("TEST", "register on close 22233322");
  * }
  */
-
-console.log(localStorage);
-

@@ -1,11 +1,15 @@
 import {Project} from "./Project";
 import {Timer} from "./Timer";
 import {Tasks} from "./Tasks";
+import * as stream from "stream";
 
 export class Display {
 
     public displayProjectFromLocalStorage() {
 
+        /**
+         * Get all project from localStorage
+         */
         let allProjectsString: string = localStorage.getItem("Projects") as string;
         let allProjectArray = JSON.parse(allProjectsString);
 
@@ -45,8 +49,21 @@ export class Display {
             projectContainer.append(titleProject);
             projectContainer.append(deletionButton);
             allProjectsContainer.prepend(projectContainer);
+            /**
+             * Display add task button.
+             */
+
+            const inputForNameTask = document.createElement("input");
+
+            const addTaskButton: HTMLButtonElement = document.createElement("button") as HTMLButtonElement;
+            addTaskButton.innerHTML = "addTask";
+
+            /**
+             * Make a new task
+             */
+
             let task = new Tasks();
-            task.createTask(allProjectArray, element, projectContainer);
+            task.createTask(allProjectArray, element, projectContainer, inputForNameTask, addTaskButton);
 
             /**
              * Display all task from all project when the page is loading.
@@ -67,7 +84,7 @@ export class Display {
                     projectContainer.append(taskContainer);
 
                     const timer: Timer = new Timer() as Timer;
-                    timer.TimerButton(taskContainer);
+                    timer.TimerButton(taskContainer, element, titleOfTask);
 
                 })
             }
