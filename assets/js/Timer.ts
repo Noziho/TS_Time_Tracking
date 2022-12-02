@@ -22,6 +22,12 @@ export class Timer {
                 timerButton.remove();
                 containerTimer.append(stopTimer);
                 let secondsIterator: number = 0;
+                if (project.tasks[i-1].totalTime < 0) {
+                    secondsIterator = 0;
+                }else {
+                    secondsIterator = project.tasks[i-1].totalTime;
+                }
+
 
                 let interval: ReturnType<typeof setInterval> = setInterval(() => {
                     secondsIterator++;
@@ -50,11 +56,10 @@ export class Timer {
                         } else {
                             task.totalTime = secondsIterator;
                         }
-                        //project.tasks[i].splice(project.tasks.find((i: any) => i.title = taskTitle.innerHTML), 1, task);
-                        project.tasks.splice(i - 1, 1);
-                        project.tasks.push(task);
+                        project.tasks.splice(i - 1, 1, task);
                         localStorage.setItem("Projects", JSON.stringify(allProjectArray));
                         secondsIterator = 0;
+                        location.reload();
                     })
             })
 

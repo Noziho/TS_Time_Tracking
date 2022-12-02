@@ -78,7 +78,6 @@ export class Display {
                     id ++;
                     const taskContainer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
                     taskContainer.className = "task padding-1 margin-top-1";
-                    taskContainer.id = id.toString();
 
                     const titleOfTask: HTMLParagraphElement = document.createElement("p") as HTMLParagraphElement;
                     titleOfTask.innerHTML = e.title;
@@ -87,7 +86,7 @@ export class Display {
                     projectContainer.append(taskContainer);
 
                     const timer: Timer = new Timer() as Timer;
-                    timer.TimerButton(taskContainer, element, titleOfTask, allProjectArray, parseInt(taskContainer.id));
+                    timer.TimerButton(taskContainer, element, titleOfTask, allProjectArray, id);
 
                 })
             }

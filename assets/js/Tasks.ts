@@ -27,7 +27,6 @@ export class Tasks {
              */
             const taskContainer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
             taskContainer.className = "task padding-1 margin-top-1";
-            taskContainer.id = id.toString();
 
             const titleOfTask: HTMLParagraphElement = document.createElement("p") as HTMLParagraphElement;
             titleOfTask.innerHTML = inputForNameTask.value;
@@ -38,7 +37,7 @@ export class Tasks {
             taskContainer.append(titleOfTask);
             projectContainer.append(taskContainer);
 
-            let iterator: number = parseInt(taskContainer.id);
+            let iterator: number = id;
 
             timer.TimerButton(taskContainer, element, titleOfTask, allProjectArray, iterator);
 
