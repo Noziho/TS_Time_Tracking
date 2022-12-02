@@ -3,9 +3,9 @@ import {Timer} from "./Timer";
 
 export class Tasks {
     public title:string = "";
-    public totalTime:string = "";
+    public totalTime:number = 0;
 
-    public createTask (allProjectArray: Project[],element: Project, projectContainer: HTMLDivElement, inputForNameTask: HTMLInputElement, addTaskButton: HTMLButtonElement, totalTime: string = "") {
+    public createTask (allProjectArray: Project[],element: Project, projectContainer: HTMLDivElement, inputForNameTask: HTMLInputElement, addTaskButton: HTMLButtonElement, totalTime: number = 0) {
 
         addTaskButton.addEventListener("click", (e: MouseEvent) => {
 
@@ -17,11 +17,17 @@ export class Tasks {
                 element.tasks.push(task);
             }
 
+            let id:number = 0;
+
+            element.tasks?.forEach(() => {
+                id++;
+            })
             /**
              * Display the task on click.
              */
             const taskContainer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
             taskContainer.className = "task padding-1 margin-top-1";
+            taskContainer.id = id.toString();
 
             const titleOfTask: HTMLParagraphElement = document.createElement("p") as HTMLParagraphElement;
             titleOfTask.innerHTML = inputForNameTask.value;
@@ -32,7 +38,9 @@ export class Tasks {
             taskContainer.append(titleOfTask);
             projectContainer.append(taskContainer);
 
-            timer.TimerButton(taskContainer, element, titleOfTask, allProjectArray);
+            let iterator: number = parseInt(taskContainer.id);
+
+            timer.TimerButton(taskContainer, element, titleOfTask, allProjectArray, iterator);
 
             localStorage.setItem("Projects", JSON.stringify(allProjectArray));
         })
