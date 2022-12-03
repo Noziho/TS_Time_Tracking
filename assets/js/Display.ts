@@ -47,7 +47,7 @@ export class Display {
 
             projectContainer.append(titleProject);
             projectContainer.append(deletionButton);
-            allProjectsContainer.prepend(projectContainer);
+
             /**
              * Display add task button.
              */
@@ -89,6 +89,33 @@ export class Display {
 
                 })
             }
+
+            /**
+             * Display total time for project.
+             */
+
+            let totalTimeArray:number [] = [];
+            element.tasks.forEach((e: Tasks) => {
+                totalTimeArray.push(e.totalTime);
+            })
+
+            let totalTimeProject = totalTimeArray.reduce((a, b) => a + b, 0);
+
+            let dateObj = new Date(totalTimeProject * 1000);
+            let hours = dateObj.getUTCHours();
+            let minutes = dateObj.getUTCMinutes();
+            let seconds = dateObj.getSeconds();
+
+            let totalTimeContainer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
+            totalTimeContainer.className = "totalTimeContainer padding-1";
+
+            let totalTimeText: HTMLParagraphElement = document.createElement("p") as HTMLParagraphElement;
+            totalTimeText.innerHTML = `Temps total passer sur le projet: ${hours}heure(s) ${minutes}minute(s) et ${seconds}secondes`;
+
+            totalTimeContainer.append(totalTimeText);
+            projectContainer.append(totalTimeContainer);
+
+            allProjectsContainer.prepend(projectContainer);
         })
 
 
