@@ -14,8 +14,10 @@ export class Display {
         let allProjectArray = JSON.parse(allProjectsString);
 
         let allProjectsContainer: HTMLDivElement = document.querySelector(".projects_container") as HTMLDivElement;
+        let index: number = 0;
 
-        allProjectArray.forEach((element: Project) => {
+        allProjectArray?.forEach((element: any) => {
+            index++;
 
             /**
              * Just display the title from the localStorage Project.
@@ -37,11 +39,8 @@ export class Display {
             deletionButton.innerHTML = "Delete project"
 
             deletionButton.addEventListener("click", (e: MouseEvent) => {
-                element.title = null;
-                if (element.tasks) {
-                    element.tasks.splice(0, element.tasks.length)
-                    localStorage.setItem("Projects", JSON.stringify(allProjectArray));
-                }
+                allProjectArray.splice(index - 1, 1);
+                localStorage.setItem("Projects", JSON.stringify(allProjectArray));
                 projectContainer.remove();
             })
 
@@ -74,7 +73,7 @@ export class Display {
                     projectContainer.remove();
                 }
                 let id = 0;
-                element.tasks.forEach((e) => {
+                element.tasks.forEach((e: any) => {
                     id ++;
                     const taskContainer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
                     taskContainer.className = "task padding-1 margin-top-1";
