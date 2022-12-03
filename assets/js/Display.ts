@@ -31,9 +31,17 @@ export class Display {
                 titleProject.innerHTML = element.title;
             }
 
+            projectContainer.append(titleProject);
+
             /**
-             * Display deletion button
+             * Display deletion button and add task button
              */
+
+            let functionalityContainer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
+            functionalityContainer.className = "functionalityContainer padding-1 margin-top-1";
+
+
+
 
             let deletionButton: HTMLButtonElement = document.createElement("button") as HTMLButtonElement;
             deletionButton.innerHTML = "Delete project"
@@ -45,8 +53,7 @@ export class Display {
             })
 
 
-            projectContainer.append(titleProject);
-            projectContainer.append(deletionButton);
+            functionalityContainer.append(deletionButton);
 
             /**
              * Display add task button.
@@ -62,11 +69,14 @@ export class Display {
              */
 
             let task = new Tasks();
-            task.createTask(allProjectArray, element, projectContainer, inputForNameTask, addTaskButton);
+            task.createTask(allProjectArray, element, functionalityContainer, inputForNameTask, addTaskButton, projectContainer);
 
             /**
              * Display all task from all project when the page is loading.
              */
+
+            let allTasksContainer : HTMLDivElement = document.createElement("div") as HTMLDivElement;
+            allTasksContainer.className = "allTasksContainer";
 
             if (element.tasks) {
                 if (element.title === null) {
@@ -82,13 +92,15 @@ export class Display {
                     titleOfTask.innerHTML = e.title;
 
                     taskContainer.append(titleOfTask);
-                    projectContainer.append(taskContainer);
+                    allTasksContainer.append(taskContainer);
+                    projectContainer.append(allTasksContainer);
 
                     const timer: Timer = new Timer() as Timer;
                     timer.TimerButton(taskContainer, element, titleOfTask, allProjectArray, id);
 
                 })
             }
+            projectContainer.append(functionalityContainer);
 
             /**
              * Display total time for project.

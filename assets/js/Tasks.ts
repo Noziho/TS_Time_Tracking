@@ -5,7 +5,13 @@ export class Tasks {
     public title:string = "";
     public totalTime:number = 0;
 
-    public createTask (allProjectArray: Project[],element: Project, projectContainer: HTMLDivElement, inputForNameTask: HTMLInputElement, addTaskButton: HTMLButtonElement, totalTime: number = 0) {
+    public createTask (
+        allProjectArray: Project[],element: Project, functionalityContainer: HTMLDivElement,
+        inputForNameTask: HTMLInputElement, addTaskButton: HTMLButtonElement, projectContainer: HTMLDivElement,
+        totalTime: number = 0
+    ){
+
+        let containerButtonAndInput: HTMLDivElement = document.createElement("div") as HTMLDivElement;
 
         addTaskButton.addEventListener("click", (e: MouseEvent) => {
 
@@ -44,7 +50,8 @@ export class Tasks {
             localStorage.setItem("Projects", JSON.stringify(allProjectArray));
         })
 
-        projectContainer.append(inputForNameTask);
-        projectContainer.append(addTaskButton);
+        containerButtonAndInput.append(inputForNameTask, addTaskButton);
+
+        functionalityContainer.append(containerButtonAndInput);
     }
 }
