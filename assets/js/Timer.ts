@@ -10,6 +10,7 @@ export class Timer {
 
         const timerButton: HTMLButtonElement = document.createElement("button") as HTMLButtonElement;
         timerButton.innerHTML = "Timer";
+        timerButton.className = "timerButton";
 
         const stopTimer: HTMLButtonElement = document.createElement("button") as HTMLButtonElement;
         stopTimer.innerHTML = "Stop";
@@ -19,6 +20,11 @@ export class Timer {
 
         timerButton.addEventListener("click",
             (e: MouseEvent) => {
+            timerButton.className = "activatedTimer";
+            let disabledButton: NodeListOf<Element> = document.querySelectorAll('.timerButton') as NodeListOf<Element>;
+            disabledButton.forEach((button: Element) => {
+                button.className = "disabled";
+            })
                 timerButton.remove();
                 containerTimer.append(stopTimer);
                 let secondsIterator: number = 0;

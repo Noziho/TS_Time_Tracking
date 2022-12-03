@@ -57,5 +57,9 @@ body {
   background-color: darken(vars.$bg-color, 10%);
 }
 
+.disabled {
+  display: none;
+}
+
 
 
