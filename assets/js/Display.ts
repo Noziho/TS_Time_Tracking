@@ -1,7 +1,6 @@
-import {Project} from "./Project";
 import {Timer} from "./Timer";
 import {Tasks} from "./Tasks";
-import * as stream from "stream";
+import {Project} from "./Project";
 
 export class Display {
 
@@ -26,7 +25,7 @@ export class Display {
             /**
              * Set the last interaction with the project.
              */
-            projectContainer.addEventListener("click", (e:MouseEvent) => {
+            projectContainer.addEventListener("click", (e: MouseEvent) => {
                 let date = new Date();
                 let day = date.getDate();
                 let month = date.getMonth() + 1;
@@ -87,7 +86,7 @@ export class Display {
 
 
             /**
-             * Display time details.
+             * Display time details and details project button.
              */
             let timeDetailsContainer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
             timeDetailsContainer.className = "timeDetails";
@@ -95,8 +94,16 @@ export class Display {
             let timeDetails: HTMLParagraphElement = document.createElement("p") as HTMLParagraphElement;
             timeDetails.innerHTML = element.lastInteraction;
 
+            let seeDetailsButton: HTMLButtonElement = document.createElement("button") as HTMLButtonElement;
+            seeDetailsButton.innerHTML = "Voir details";
 
-            let totalTimeArray:number [] = [];
+            seeDetailsButton.addEventListener("click", () => {
+                localStorage.setItem("currentProject", JSON.stringify(allProjectArray.indexOf(element)));
+                location.assign('http://localhost:8080/projectDetails.html');
+            })
+
+
+            let totalTimeArray: number [] = [];
             element.tasks.forEach((e: Tasks) => {
                 totalTimeArray.push(e.totalTime);
             })
@@ -116,14 +123,13 @@ export class Display {
 
             totalTimeContainer.append(totalTimeText);
             timeDetailsContainer.append(totalTimeContainer);
-
             timeDetailsContainer.append(timeDetails);
+            timeDetailsContainer.append(seeDetailsButton);
             projectContainer.append(timeDetailsContainer);
 
             /**
              * Display all task from all project when the page is loading.
              */
-
 
 
             if (element.tasks) {
@@ -132,7 +138,7 @@ export class Display {
                 }
                 let id = 0;
                 element.tasks.forEach((e: any) => {
-                    id ++;
+                    id++;
                     const taskContainer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
                     taskContainer.className = "task padding-1 margin-top-1";
 
@@ -149,9 +155,33 @@ export class Display {
                 })
             }
             projectContainer.append(functionalityContainer);
-            allProjectsContainer.prepend(projectContainer);
+            allProjectsContainer?.prepend(projectContainer);
         })
 
+
+    }
+
+    public displayProjectDetails() {
+
+            const seeDetailsContainer: HTMLDivElement = document.querySelector(".container") as HTMLDivElement;
+            console.log(seeDetailsContainer)
+            if (seeDetailsContainer) {
+                let allProjectsString: string = localStorage.getItem("Projects") as string;
+                let allProjectArray = JSON.parse(allProjectsString);
+
+
+                let index = JSON.parse(localStorage.getItem("currentProject") as string);
+                let currentProject: Project = allProjectArray[index] as Project;
+
+
+                let detailsProjectContainer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
+                let projectTitle: HTMLHeadingElement = document.createElement("h1") as HTMLHeadingElement;
+                projectTitle.innerHTML = currentProject.title ? currentProject.title : "";
+
+
+                detailsProjectContainer.append(projectTitle);
+                seeDetailsContainer.append(detailsProjectContainer);
+            }
 
     }
 }

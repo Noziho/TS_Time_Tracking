@@ -4,12 +4,15 @@ import {Display} from "./Display";
 
 
 
+alert("OE OE");
+
 let test = new Project();
 test.createButtonProject();
 
 
 let display: Display = new Display() as Display;
 display.displayProjectFromLocalStorage();
+display.displayProjectDetails();
 
 /**
  * window.onunload = function() {

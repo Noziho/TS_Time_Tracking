@@ -48,7 +48,7 @@ export class Project {
             }
         })
 
-        inputContainer.append(buttonAddProject);
+        inputContainer?.append(buttonAddProject);
 
     }
 }
