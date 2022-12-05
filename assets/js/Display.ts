@@ -208,7 +208,14 @@ export class Display {
                 taskTitle.innerHTML = e.title;
 
                 let taskTime: HTMLParagraphElement = document.createElement("p") as HTMLParagraphElement;
-                taskTime.innerHTML = e.totalTime;
+
+
+                let dateObj = new Date(e.totalTime * 1000);
+                let hours = dateObj.getUTCHours();
+                let minutes = dateObj.getUTCMinutes();
+                let seconds = dateObj.getSeconds();
+
+                taskTime.innerHTML = `${hours} h ${minutes} et ${seconds} s`;
 
 
 
