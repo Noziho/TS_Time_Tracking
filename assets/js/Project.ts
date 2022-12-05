@@ -5,6 +5,7 @@ export class Project {
     private allProjects: Project[] = [];
     public tasks : Tasks [] | null = [];
     public title:string | null = "";
+    public lastInteraction: string = "";
 
     public createButtonProject ():void {
 

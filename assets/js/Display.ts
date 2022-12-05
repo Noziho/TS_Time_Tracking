@@ -19,12 +19,25 @@ export class Display {
         allProjectArray?.forEach((element: any) => {
             index++;
 
-            /**
-             * Just display the title from the localStorage Project.
-             */
 
             let projectContainer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
             projectContainer.className = "project padding-1 margin-2";
+
+            /**
+             * Set the last interaction with the project.
+             */
+            projectContainer.addEventListener("click", (e:MouseEvent) => {
+                let date = new Date();
+                let day = date.getDate();
+                let month = date.getMonth() + 1;
+                let year = date.getFullYear();
+                element.lastInteraction = `${day}/${month}/${year}`;
+                localStorage.setItem("Projects", JSON.stringify(allProjectArray));
+            })
+
+            /**
+             * Display the title project from the localStorage.
+             */
 
             let titleProject: HTMLHeadingElement = document.createElement("h2") as HTMLHeadingElement;
             if (typeof element.title === "string") {
@@ -41,8 +54,6 @@ export class Display {
             functionalityContainer.className = "functionalityContainer padding-1 margin-top-1";
 
 
-
-
             let deletionButton: HTMLButtonElement = document.createElement("button") as HTMLButtonElement;
             deletionButton.innerHTML = "Delete project"
 
@@ -50,6 +61,7 @@ export class Display {
                 allProjectArray.splice(index - 1, 1);
                 localStorage.setItem("Projects", JSON.stringify(allProjectArray));
                 projectContainer.remove();
+                location.reload();
             })
 
 
@@ -58,6 +70,8 @@ export class Display {
             /**
              * Display add task button.
              */
+            let allTasksContainer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
+            allTasksContainer.className = "allTasksContainer";
 
             const inputForNameTask = document.createElement("input");
 
@@ -69,14 +83,48 @@ export class Display {
              */
 
             let task = new Tasks();
-            task.createTask(allProjectArray, element, functionalityContainer, inputForNameTask, addTaskButton, projectContainer);
+            task.createTask(allProjectArray, element, functionalityContainer, inputForNameTask, addTaskButton, projectContainer, allTasksContainer);
+
+
+            /**
+             * Display time details.
+             */
+            let timeDetailsContainer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
+            timeDetailsContainer.className = "timeDetails";
+
+            let timeDetails: HTMLParagraphElement = document.createElement("p") as HTMLParagraphElement;
+            timeDetails.innerHTML = element.lastInteraction;
+
+
+            let totalTimeArray:number [] = [];
+            element.tasks.forEach((e: Tasks) => {
+                totalTimeArray.push(e.totalTime);
+            })
+
+            let totalTimeProject = totalTimeArray.reduce((a, b) => a + b, 0);
+
+            let dateObj = new Date(totalTimeProject * 1000);
+            let hours = dateObj.getUTCHours();
+            let minutes = dateObj.getUTCMinutes();
+            let seconds = dateObj.getSeconds();
+
+            let totalTimeContainer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
+            totalTimeContainer.className = "totalTimeContainer padding-1";
+
+            let totalTimeText: HTMLParagraphElement = document.createElement("p") as HTMLParagraphElement;
+            totalTimeText.innerHTML = `Total: ${hours} h ${minutes} et ${seconds}s`;
+
+            totalTimeContainer.append(totalTimeText);
+            timeDetailsContainer.append(totalTimeContainer);
+
+            timeDetailsContainer.append(timeDetails);
+            projectContainer.append(timeDetailsContainer);
 
             /**
              * Display all task from all project when the page is loading.
              */
 
-            let allTasksContainer : HTMLDivElement = document.createElement("div") as HTMLDivElement;
-            allTasksContainer.className = "allTasksContainer";
+
 
             if (element.tasks) {
                 if (element.title === null) {
@@ -101,32 +149,6 @@ export class Display {
                 })
             }
             projectContainer.append(functionalityContainer);
-
-            /**
-             * Display total time for project.
-             */
-
-            let totalTimeArray:number [] = [];
-            element.tasks.forEach((e: Tasks) => {
-                totalTimeArray.push(e.totalTime);
-            })
-
-            let totalTimeProject = totalTimeArray.reduce((a, b) => a + b, 0);
-
-            let dateObj = new Date(totalTimeProject * 1000);
-            let hours = dateObj.getUTCHours();
-            let minutes = dateObj.getUTCMinutes();
-            let seconds = dateObj.getSeconds();
-
-            let totalTimeContainer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
-            totalTimeContainer.className = "totalTimeContainer padding-1";
-
-            let totalTimeText: HTMLParagraphElement = document.createElement("p") as HTMLParagraphElement;
-            totalTimeText.innerHTML = `Temps total passer sur le projet: ${hours}heure(s) ${minutes}minute(s) et ${seconds}secondes`;
-
-            totalTimeContainer.append(totalTimeText);
-            projectContainer.append(totalTimeContainer);
-
             allProjectsContainer.prepend(projectContainer);
         })
 

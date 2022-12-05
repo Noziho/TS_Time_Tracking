@@ -8,7 +8,7 @@ export class Tasks {
     public createTask (
         allProjectArray: Project[],element: Project, functionalityContainer: HTMLDivElement,
         inputForNameTask: HTMLInputElement, addTaskButton: HTMLButtonElement, projectContainer: HTMLDivElement,
-        totalTime: number = 0
+        allTasksContainer:HTMLDivElement, totalTime: number = 0
     ){
 
         let containerButtonAndInput: HTMLDivElement = document.createElement("div") as HTMLDivElement;
@@ -41,7 +41,7 @@ export class Tasks {
             const timer: Timer = new Timer() as Timer;
 
             taskContainer.append(titleOfTask);
-            projectContainer.append(taskContainer);
+            allTasksContainer.append(taskContainer);
 
             let iterator: number = id;
 
