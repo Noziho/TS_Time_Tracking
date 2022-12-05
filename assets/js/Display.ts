@@ -163,25 +163,46 @@ export class Display {
 
     public displayProjectDetails() {
 
-            const seeDetailsContainer: HTMLDivElement = document.querySelector(".container") as HTMLDivElement;
-            console.log(seeDetailsContainer)
-            if (seeDetailsContainer) {
-                let allProjectsString: string = localStorage.getItem("Projects") as string;
-                let allProjectArray = JSON.parse(allProjectsString);
+        const seeDetailsContainer: HTMLDivElement = document.querySelector(".details_project_container") as HTMLDivElement;
+        if (seeDetailsContainer) {
+            let allProjectsString: string = localStorage.getItem("Projects") as string;
+            let allProjectArray = JSON.parse(allProjectsString);
 
 
-                let index = JSON.parse(localStorage.getItem("currentProject") as string);
-                let currentProject: Project = allProjectArray[index] as Project;
+            let index = JSON.parse(localStorage.getItem("currentProject") as string);
+            let currentProject: Project = allProjectArray[index] as Project;
 
 
-                let detailsProjectContainer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
-                let projectTitle: HTMLHeadingElement = document.createElement("h1") as HTMLHeadingElement;
-                projectTitle.innerHTML = currentProject.title ? currentProject.title : "";
+            let detailsProjectContainer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
+            detailsProjectContainer.className = "containerDetailsProject";
+            let projectTitle: HTMLHeadingElement = document.createElement("h1") as HTMLHeadingElement;
+            projectTitle.innerHTML = currentProject.title ? currentProject.title : "";
+
+            let tasksContainer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
+            tasksContainer.className = "detailsTaskContainer";
+
+            currentProject.tasks?.forEach((e: any) => {
+                let taskContainer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
+                taskContainer.className = "detailsList";
+
+                let taskTitle: HTMLHeadingElement = document.createElement("h3") as HTMLHeadingElement;
+                taskTitle.innerHTML = e.title;
+
+                let taskTime: HTMLParagraphElement = document.createElement("p") as HTMLParagraphElement;
+                taskTime.innerHTML = e.totalTime;
+
+                taskContainer.append(taskTitle);
+                taskContainer.append(taskTime);
+                tasksContainer.append(taskContainer);
+
+            })
 
 
-                detailsProjectContainer.append(projectTitle);
-                seeDetailsContainer.append(detailsProjectContainer);
-            }
+
+            detailsProjectContainer.append(projectTitle);
+            detailsProjectContainer.append(tasksContainer);
+            seeDetailsContainer.append(detailsProjectContainer);
+        }
 
     }
 }

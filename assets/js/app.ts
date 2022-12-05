@@ -4,7 +4,6 @@ import {Display} from "./Display";
 
 
 
-alert("OE OE");
 
 let test = new Project();
 test.createButtonProject();

@@ -16,6 +16,11 @@ body {
   font-size: 1.6rem;
 }
 
+* a {
+  text-decoration: none;
+  color: vars.$text-color;
+}
+
 %container {
   width: 100%;
   display: flex;
@@ -92,5 +97,20 @@ body {
   flex-flow: row wrap;
 }
 
+.detailsList {
+  width: 100%;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.details_project_container {
+  width: 100%;
+}
+
+.detailsTaskContainer {
+  width: 80%;
+}
 
 
