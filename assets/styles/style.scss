@@ -107,10 +107,23 @@ body {
 
 .details_project_container {
   width: 100%;
+  padding: 5rem;
 }
 
 .detailsTaskContainer {
   width: 80%;
 }
 
+.containerDetailsProject {
+  padding: 1rem;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  background: darken(vars.$bg-color, 5%);
+
+  h1 {
+    width: 100%;
+    text-align: center;
+  }
+}
 

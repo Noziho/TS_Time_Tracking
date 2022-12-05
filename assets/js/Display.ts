@@ -176,10 +176,32 @@ export class Display {
             let detailsProjectContainer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
             detailsProjectContainer.className = "containerDetailsProject";
             let projectTitle: HTMLHeadingElement = document.createElement("h1") as HTMLHeadingElement;
+            projectTitle.style.color = "#5959d7";
             projectTitle.innerHTML = currentProject.title ? currentProject.title : "";
 
             let tasksContainer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
             tasksContainer.className = "detailsTaskContainer";
+
+
+            let totalTimeArray: number [] = [];
+            currentProject.tasks?.forEach((e: Tasks) => {
+                totalTimeArray.push(e.totalTime);
+            })
+
+            let totalTimeProject = totalTimeArray.reduce((a, b) => a + b, 0);
+
+            let dateObj = new Date(totalTimeProject * 1000);
+            let hours = dateObj.getUTCHours();
+            let minutes = dateObj.getUTCMinutes();
+            let seconds = dateObj.getSeconds();
+
+            let totalTimeContainer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
+            totalTimeContainer.className = "timeDetails margin-top-2";
+
+            let totalTime: HTMLParagraphElement = document.createElement("p") as HTMLParagraphElement;
+            totalTime.innerHTML = `Total: ${hours} h ${minutes} et ${seconds}s`;
+
+            totalTimeContainer.append(totalTime);
 
             currentProject.tasks?.forEach((e: any) => {
                 let taskContainer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
@@ -191,6 +213,8 @@ export class Display {
                 let taskTime: HTMLParagraphElement = document.createElement("p") as HTMLParagraphElement;
                 taskTime.innerHTML = e.totalTime;
 
+
+
                 taskContainer.append(taskTitle);
                 taskContainer.append(taskTime);
                 tasksContainer.append(taskContainer);
@@ -200,6 +224,7 @@ export class Display {
 
 
             detailsProjectContainer.append(projectTitle);
+            detailsProjectContainer.append(totalTimeContainer);
             detailsProjectContainer.append(tasksContainer);
             seeDetailsContainer.append(detailsProjectContainer);
         }
