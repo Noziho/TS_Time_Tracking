@@ -200,7 +200,31 @@ export class Display {
 
             totalTimeContainer.append(totalTime);
 
+
+
             currentProject.tasks?.forEach((e: any) => {
+
+                let editTaskButton: HTMLButtonElement = document.createElement("button") as HTMLButtonElement;
+                editTaskButton.innerHTML = "Edit";
+
+                let taskEditValidation: HTMLButtonElement = document.createElement("button") as HTMLButtonElement;
+                taskEditValidation.innerHTML = "Validez";
+                let inputTaskEdit: HTMLInputElement = document.createElement("input") as HTMLInputElement;
+                inputTaskEdit.value = e.title;
+                editTaskButton.addEventListener("click", (event:MouseEvent) => {
+
+
+                    taskContainer.append(inputTaskEdit);
+                    taskContainer.append(taskEditValidation)
+                    editTaskButton.remove();
+                    taskTitle.remove();
+                })
+
+                taskEditValidation.addEventListener("click" ,() => {
+                    e.title = inputTaskEdit.value;
+                    console.log(e.title);
+                })
+
                 let taskContainer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
                 taskContainer.className = "detailsList";
 
@@ -219,8 +243,10 @@ export class Display {
 
 
 
+
                 taskContainer.append(taskTitle);
                 taskContainer.append(taskTime);
+                taskContainer.append(editTaskButton);
                 tasksContainer.append(taskContainer);
 
             })
