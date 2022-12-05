@@ -13,11 +13,8 @@ export class Display {
         let allProjectArray = JSON.parse(allProjectsString);
 
         let allProjectsContainer: HTMLDivElement = document.querySelector(".projects_container") as HTMLDivElement;
-        let index: number = 0;
 
         allProjectArray?.forEach((element: any) => {
-            index++;
-
 
             let projectContainer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
             projectContainer.className = "project padding-1 margin-2";
@@ -57,7 +54,7 @@ export class Display {
             deletionButton.innerHTML = "Delete project"
 
             deletionButton.addEventListener("click", (e: MouseEvent) => {
-                allProjectArray.splice(index - 1, 1);
+                allProjectArray.splice(allProjectArray.indexOf(element), 1);
                 localStorage.setItem("Projects", JSON.stringify(allProjectArray));
                 projectContainer.remove();
                 location.reload();
