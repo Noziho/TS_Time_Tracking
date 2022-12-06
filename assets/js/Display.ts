@@ -158,13 +158,20 @@ export class Display {
 
     }
 
+    /**
+     * Display project details when click on it.
+     */
     public displayProjectDetails() {
 
         const seeDetailsContainer: HTMLDivElement = document.querySelector(".details_project_container") as HTMLDivElement;
+
         if (seeDetailsContainer) {
+
+            /**
+             * Get all project and the current project (clicked one) from localStorage.
+             */
             let allProjectsString: string = localStorage.getItem("Projects") as string;
             let allProjectArray = JSON.parse(allProjectsString);
-
 
             let index = JSON.parse(localStorage.getItem("currentProject") as string);
             let currentProject: Project = allProjectArray[index] as Project;
@@ -172,6 +179,7 @@ export class Display {
 
             let detailsProjectContainer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
             detailsProjectContainer.className = "containerDetailsProject";
+
             let projectTitle: HTMLHeadingElement = document.createElement("h1") as HTMLHeadingElement;
             projectTitle.style.color = "#5959d7";
             projectTitle.innerHTML = currentProject.title ? currentProject.title : "";
@@ -179,7 +187,9 @@ export class Display {
             let tasksContainer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
             tasksContainer.className = "detailsTaskContainer";
 
-
+            /**
+             * Convert seconds to hours minutes and seconds.
+             */
             let totalTimeArray: number [] = [];
             currentProject.tasks?.forEach((e: Tasks) => {
                 totalTimeArray.push(e.totalTime);
@@ -200,8 +210,9 @@ export class Display {
 
             totalTimeContainer.append(totalTime);
 
-
-
+            /**
+             * Do a display for all tasks.
+             */
             currentProject.tasks?.forEach((e: any) => {
 
                 let deleteTaskButton: HTMLButtonElement = document.createElement("button") as HTMLButtonElement;
@@ -216,6 +227,9 @@ export class Display {
                 let inputTaskEdit: HTMLInputElement = document.createElement("input") as HTMLInputElement;
                 inputTaskEdit.value = e.title;
 
+                /**
+                 * Delete task from localStorage.
+                 */
                 deleteTaskButton.addEventListener("click", (event: MouseEvent) => {
                     allProjectArray[index].tasks.splice(allProjectArray[index].tasks?.indexOf(e), 1);
                     localStorage.setItem("Projects", JSON.stringify(allProjectArray));
@@ -229,6 +243,9 @@ export class Display {
                     taskTitle.remove();
                 })
 
+                /**
+                 * Edit confirmation button who set the result to the localStorage.
+                 */
                 taskEditValidation.addEventListener("click" ,() => {
                     e.title = inputTaskEdit.value;
                     taskTitle.innerHTML = e.title;
@@ -239,8 +256,6 @@ export class Display {
                     taskContainer.prepend(taskTitle);
                 })
 
-
-
                 let taskContainer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
                 taskContainer.className = "detailsList";
 
@@ -249,16 +264,15 @@ export class Display {
 
                 let taskTime: HTMLParagraphElement = document.createElement("p") as HTMLParagraphElement;
 
-
+                /**
+                 * Convert seconds to hours minutes and seconds for each task time.
+                 */
                 let dateObj = new Date(e.totalTime * 1000);
                 let hours = dateObj.getUTCHours();
                 let minutes = dateObj.getUTCMinutes();
                 let seconds = dateObj.getSeconds();
 
                 taskTime.innerHTML = `${hours} h ${minutes} et ${seconds} s`;
-
-
-
 
                 taskContainer.append(taskTitle);
                 taskContainer.append(taskTime);
@@ -267,8 +281,6 @@ export class Display {
                 tasksContainer.append(taskContainer);
 
             })
-
-
 
             detailsProjectContainer.append(projectTitle);
             detailsProjectContainer.append(totalTimeContainer);

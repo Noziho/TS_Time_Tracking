@@ -18,16 +18,20 @@ export class Timer {
         const totalTime: HTMLSpanElement = document.createElement("span") as HTMLSpanElement;
         totalTime.id = "timer";
 
+        /**
+         * Start timer and display the stop button when clicked and remove all other timer button.
+         */
         timerButton.addEventListener("click",
             (e: MouseEvent) => {
             timerButton.className = "activatedTimer";
-            let disabledButton: NodeListOf<Element> = document.querySelectorAll('.timerButton') as NodeListOf<Element>;
-            disabledButton.forEach((button: Element) => {
-                button.className = "disabled";
-            })
                 timerButton.remove();
                 containerTimer.append(stopTimer);
+
                 let secondsIterator: number = 0;
+
+                /**
+                 * Get time from localStorage.
+                 */
                 if (project.tasks[i-1].totalTime < 0) {
                     secondsIterator = 0;
                 }else {
@@ -35,6 +39,9 @@ export class Timer {
                 }
 
 
+                /**
+                 * Start timer iteration and convert seconds to hours minutes and seconds.
+                 */
                 let interval: ReturnType<typeof setInterval> = setInterval(() => {
                     secondsIterator++;
                     if (secondsIterator) {
@@ -46,24 +53,22 @@ export class Timer {
                     }
                 }, 1000);
 
+                /**
+                 * Stop timer when clicked
+                 */
                 stopTimer.addEventListener("click",
                     (e: MouseEvent) => {
                         clearInterval(interval);
                         stopTimer.remove();
                         containerTimer.append(timerButton);
 
-                        if (!project.tasks) {
-                            return;
-                        }
                         let task = new Tasks();
                         task.title = taskTitle.innerHTML;
-                        if (task.totalTime !== 0) {
-                            task.totalTime += secondsIterator;
-                        } else {
-                            task.totalTime = secondsIterator;
-                        }
+                        task.totalTime = secondsIterator;
+
                         project.tasks.splice(i - 1, 1, task);
                         localStorage.setItem("Projects", JSON.stringify(allProjectArray));
+
                         secondsIterator = 0;
                         location.reload();
                     })

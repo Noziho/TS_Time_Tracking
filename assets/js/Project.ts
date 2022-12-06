@@ -14,9 +14,15 @@ export class Project {
         let buttonAddProject: HTMLButtonElement = document.createElement("button")as  HTMLButtonElement;
         buttonAddProject.innerHTML = "Add project";
 
+        /**
+         * Make a new project when clicked.
+         */
         buttonAddProject.addEventListener("click", (e: MouseEvent) => {
             let inputForTitle: HTMLInputElement = document.querySelector("input") as HTMLInputElement;
 
+            /**
+             * Get projects from localStorage if exists.
+             */
             if (localStorage.getItem("Projects")) {
 
                 let allProjectsString: string = localStorage.getItem("Projects") as string;
@@ -35,6 +41,9 @@ export class Project {
             }
             else {
 
+                /**
+                 * When localStorage "Projects" is empty.
+                 */
                 let project: Project = new Project();
                 project.title = inputForTitle.value;
 

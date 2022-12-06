@@ -13,6 +13,9 @@ export class Tasks {
 
         let containerButtonAndInput: HTMLDivElement = document.createElement("div") as HTMLDivElement;
 
+        /**
+         * Make a task when clicked.
+         */
         addTaskButton.addEventListener("click", (e: MouseEvent) => {
 
 
