@@ -105,18 +105,27 @@ export class Display {
                 totalTimeArray.push(e.totalTime);
             })
 
-            let totalTimeProject = totalTimeArray.reduce((a, b) => a + b, 0);
-
-            let dateObj = new Date(totalTimeProject * 1000);
-            let hours = dateObj.getUTCHours();
-            let minutes = dateObj.getUTCMinutes();
-            let seconds = dateObj.getSeconds();
-
             let totalTimeContainer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
             totalTimeContainer.className = "totalTimeContainer padding-1";
-
+            let totalTimeProject = totalTimeArray.reduce((a, b) => a + b, 0);
             let totalTimeText: HTMLParagraphElement = document.createElement("p") as HTMLParagraphElement;
-            totalTimeText.innerHTML = `Total: ${hours} h ${minutes} et ${seconds}s`;
+
+            let hours = Math.trunc(totalTimeProject / 3600);
+            let minutes = Math.trunc(totalTimeProject / 60);
+
+            if (totalTimeProject >= 60) {
+                totalTimeText.innerHTML = `${minutes} minutes`
+            }
+            else if (minutes >= 60) {
+                totalTimeText.innerHTML = `${hours} heures`;
+            }
+            else if (minutes < 1) {
+                totalTimeText.innerHTML = `${totalTimeProject} secondes`;
+            }
+
+
+
+
 
             totalTimeContainer.append(totalTimeText);
             timeDetailsContainer.append(totalTimeContainer);
@@ -197,16 +206,38 @@ export class Display {
 
             let totalTimeProject = totalTimeArray.reduce((a, b) => a + b, 0);
 
-            let dateObj = new Date(totalTimeProject * 1000);
-            let hours = dateObj.getUTCHours();
-            let minutes = dateObj.getUTCMinutes();
-            let seconds = dateObj.getSeconds();
-
             let totalTimeContainer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
-            totalTimeContainer.className = "timeDetails margin-top-2";
+            totalTimeContainer.className = "totalTimeContainer padding-1";
 
             let totalTime: HTMLParagraphElement = document.createElement("p") as HTMLParagraphElement;
-            totalTime.innerHTML = `Total: ${hours} h ${minutes} et ${seconds}s`;
+
+            let hours = Math.trunc(totalTimeProject / 3600);
+            let minutes = Math.trunc(totalTimeProject / 60);
+
+            if (totalTimeProject >= 60) {
+                totalTime.innerHTML = `${minutes} minutes`
+            }
+            else if (minutes >= 60) {
+                totalTime.innerHTML = `${hours} heures`;
+            }
+            else if (minutes < 1) {
+                totalTime.innerHTML = `${totalTimeProject} secondes`;
+            }
+
+
+            let timeValueEditContainer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
+            timeValueEditContainer.className = "containerTimeEdit";
+
+            let hoursValue: HTMLInputElement = document.createElement("input") as HTMLInputElement;
+            hoursValue.className = "editTimeInput";
+
+            let minutesValue: HTMLInputElement = document.createElement("input") as HTMLInputElement;
+            minutesValue.className = "editTimeInput";
+
+            let secondsValue: HTMLInputElement = document.createElement("input") as HTMLInputElement;
+            secondsValue.className = "editTimeInput";
+
+            timeValueEditContainer.append(hoursValue, minutesValue, secondsValue);
 
             totalTimeContainer.append(totalTime);
 
@@ -220,6 +251,12 @@ export class Display {
 
                 let editTaskButton: HTMLButtonElement = document.createElement("button") as HTMLButtonElement;
                 editTaskButton.innerHTML = "Modifiez";
+
+                let editTimeButton: HTMLButtonElement = document.createElement("button") as HTMLButtonElement;
+                editTimeButton.innerHTML = "Modifier le temps";
+
+                let confirmEditTimeButton: HTMLButtonElement = document.createElement("button") as HTMLButtonElement;
+                confirmEditTimeButton.innerHTML = "Validez";
 
                 let taskEditValidation: HTMLButtonElement = document.createElement("button") as HTMLButtonElement;
                 taskEditValidation.innerHTML = "Validez";
@@ -259,7 +296,48 @@ export class Display {
                     taskEditValidation.remove();
                     inputTaskEdit.remove();
                     taskContainer.append(editTaskButton);
+                    taskContainer.append(taskTitle);
+                })
+
+                /**
+                 * Edit time
+                 */
+
+                editTimeButton.addEventListener("click", (event:MouseEvent) => {
+                    let dateObj = new Date(e.totalTime * 1000);
+                    let hours = dateObj.getUTCHours();
+                    let minutes = dateObj.getUTCMinutes();
+                    let seconds = dateObj.getSeconds();
+
+                    hoursValue.value = hours.toString();
+                    minutesValue.value = minutes.toString();
+                    secondsValue.value = seconds.toString();
+
+                    taskTime.remove();
+                    taskTitle.remove();
+                    editTimeButton.remove();
+                    taskContainer.prepend(timeValueEditContainer);
+
                     taskContainer.prepend(taskTitle);
+                    taskContainer.append(confirmEditTimeButton);
+
+                })
+
+                confirmEditTimeButton.addEventListener("click", () => {
+
+                    let intHours = parseInt(hoursValue.value) * 3600;
+                    let intMinutes = parseInt(minutesValue.value) * 60;
+                    let intSeconds = parseInt(secondsValue.value);
+
+                    let totalTimeInSeconds = intHours + intMinutes + intSeconds;
+
+
+
+
+                    confirmEditTimeButton.remove();
+                    timeValueEditContainer.remove();
+                    taskContainer.append(taskTime);
+                    taskContainer.append(editTimeButton);
                 })
 
                 let taskContainer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
@@ -282,6 +360,7 @@ export class Display {
 
                 taskContainer.append(taskTitle);
                 taskContainer.append(taskTime);
+                taskContainer.append(editTimeButton);
                 taskContainer.append(editTaskButton);
                 taskContainer.append(deleteTaskButton);
                 tasksContainer.append(taskContainer);

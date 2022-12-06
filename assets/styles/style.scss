@@ -131,3 +131,14 @@ body {
   }
 }
 
+.editTimeInput {
+  width: 25%;
+}
+
+.containerTimeEdit {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  padding: 1rem;
+}
+

@@ -16,7 +16,6 @@ export class Timer {
         stopTimer.innerHTML = "Stop";
 
         const totalTime: HTMLSpanElement = document.createElement("span") as HTMLSpanElement;
-        totalTime.id = "timer";
 
         /**
          * Start timer and display the stop button when clicked and remove all other timer button.
@@ -36,7 +35,7 @@ export class Timer {
                 /**
                  * Get time from localStorage.
                  */
-                if (project.tasks[i - 1].totalTime < 0) {
+                if (project.tasks[i - 1].totalTime <= 0) {
                     secondsIterator = 0;
                 } else {
                     secondsIterator = project.tasks[i - 1].totalTime;
@@ -46,6 +45,7 @@ export class Timer {
                 /**
                  * Start timer iteration and convert seconds to hours minutes and seconds.
                  */
+
                 let interval: ReturnType<typeof setInterval> = setInterval(() => {
                     secondsIterator++;
                     if (secondsIterator) {
@@ -55,6 +55,7 @@ export class Timer {
                         let seconds = dateObj.getSeconds();
                         totalTime.innerHTML = `${hours}:${minutes}:${seconds}`
                     }
+
                 }, 1000);
 
                 /**
