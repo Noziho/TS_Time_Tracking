@@ -103,6 +103,10 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  h3, p, button {
+    width: 25%;
+  }
 }
 
 .details_project_container {
@@ -111,7 +115,7 @@ body {
 }
 
 .detailsTaskContainer {
-  width: 80%;
+  width: 100%;
 }
 
 .containerDetailsProject {

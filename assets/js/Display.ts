@@ -214,16 +214,25 @@ export class Display {
                 editTaskButton.addEventListener("click", (event:MouseEvent) => {
 
 
-                    taskContainer.append(inputTaskEdit);
+
                     taskContainer.append(taskEditValidation)
+                    taskContainer.prepend(inputTaskEdit);
                     editTaskButton.remove();
                     taskTitle.remove();
+
                 })
 
                 taskEditValidation.addEventListener("click" ,() => {
                     e.title = inputTaskEdit.value;
-                    console.log(e.title);
+                    taskTitle.innerHTML = e.title;
+                    localStorage.setItem("Projects", JSON.stringify(allProjectArray));
+                    taskEditValidation.remove();
+                    inputTaskEdit.remove();
+                    taskContainer.append(editTaskButton);
+                    taskContainer.prepend(taskTitle);
                 })
+
+
 
                 let taskContainer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
                 taskContainer.className = "detailsList";
