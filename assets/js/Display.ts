@@ -237,6 +237,12 @@ export class Display {
                 })
 
                 editTaskButton.addEventListener("click", (event:MouseEvent) => {
+                    let date = new Date();
+                    let day = date.getDate();
+                    let month = date.getMonth() + 1;
+                    let year = date.getFullYear();
+                    e.lastInteraction = `${day}/${month}/${year}`;
+                    localStorage.setItem("Projects", JSON.stringify(allProjectArray));
                     taskContainer.append(taskEditValidation)
                     taskContainer.prepend(inputTaskEdit);
                     editTaskButton.remove();

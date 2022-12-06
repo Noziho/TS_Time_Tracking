@@ -66,11 +66,19 @@ export class Timer {
                         stopTimer.remove();
                         containerTimer.append(timerButton);
 
+                        let date = new Date();
+                        let day = date.getDate();
+                        let month = date.getMonth() + 1;
+                        let year = date.getFullYear();
+
                         let task = new Tasks();
                         task.title = taskTitle.innerHTML;
                         task.totalTime = secondsIterator;
+                        task.lastInteraction = `${day}/${month}/${year}`;
+
 
                         project.tasks.splice(i - 1, 1, task);
+
                         localStorage.setItem("Projects", JSON.stringify(allProjectArray));
 
                         secondsIterator = 0;

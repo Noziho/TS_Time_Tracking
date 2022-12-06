@@ -4,6 +4,7 @@ import {Timer} from "./Timer";
 export class Tasks {
     public title:string = "";
     public totalTime:number = 0;
+    public lastInteraction:string = "";
 
     public createTask (
         allProjectArray: Project[],element: Project, functionalityContainer: HTMLDivElement,
