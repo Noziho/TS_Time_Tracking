@@ -204,22 +204,29 @@ export class Display {
 
             currentProject.tasks?.forEach((e: any) => {
 
+                let deleteTaskButton: HTMLButtonElement = document.createElement("button") as HTMLButtonElement;
+                deleteTaskButton.innerHTML = "Supprimez";
+
                 let editTaskButton: HTMLButtonElement = document.createElement("button") as HTMLButtonElement;
-                editTaskButton.innerHTML = "Edit";
+                editTaskButton.innerHTML = "Modifiez";
 
                 let taskEditValidation: HTMLButtonElement = document.createElement("button") as HTMLButtonElement;
                 taskEditValidation.innerHTML = "Validez";
+
                 let inputTaskEdit: HTMLInputElement = document.createElement("input") as HTMLInputElement;
                 inputTaskEdit.value = e.title;
+
+                deleteTaskButton.addEventListener("click", (event: MouseEvent) => {
+                    allProjectArray[index].tasks.splice(allProjectArray[index].tasks?.indexOf(e), 1);
+                    localStorage.setItem("Projects", JSON.stringify(allProjectArray));
+                    taskContainer.remove();
+                })
+
                 editTaskButton.addEventListener("click", (event:MouseEvent) => {
-
-
-
                     taskContainer.append(taskEditValidation)
                     taskContainer.prepend(inputTaskEdit);
                     editTaskButton.remove();
                     taskTitle.remove();
-
                 })
 
                 taskEditValidation.addEventListener("click" ,() => {
@@ -256,6 +263,7 @@ export class Display {
                 taskContainer.append(taskTitle);
                 taskContainer.append(taskTime);
                 taskContainer.append(editTaskButton);
+                taskContainer.append(deleteTaskButton);
                 tasksContainer.append(taskContainer);
 
             })
