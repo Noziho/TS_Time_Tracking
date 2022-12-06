@@ -116,10 +116,10 @@ export class Display {
             if (totalTimeProject >= 60) {
                 totalTimeText.innerHTML = `${minutes} minutes`
             }
-            else if (minutes >= 60) {
+            if (minutes >= 60) {
                 totalTimeText.innerHTML = `${hours} heures`;
             }
-            else if (minutes < 1) {
+            if (minutes < 1) {
                 totalTimeText.innerHTML = `${totalTimeProject} secondes`;
             }
 
@@ -217,10 +217,10 @@ export class Display {
             if (totalTimeProject >= 60) {
                 totalTime.innerHTML = `${minutes} minutes`
             }
-            else if (minutes >= 60) {
+            if (minutes >= 60) {
                 totalTime.innerHTML = `${hours} heures`;
             }
-            else if (minutes < 1) {
+            if (minutes < 1) {
                 totalTime.innerHTML = `${totalTimeProject} secondes`;
             }
 
@@ -230,12 +230,15 @@ export class Display {
 
             let hoursValue: HTMLInputElement = document.createElement("input") as HTMLInputElement;
             hoursValue.className = "editTimeInput";
+            hoursValue.placeholder = "Heures ...";
 
             let minutesValue: HTMLInputElement = document.createElement("input") as HTMLInputElement;
             minutesValue.className = "editTimeInput";
+            minutesValue.placeholder = "Minutes ...";
 
             let secondsValue: HTMLInputElement = document.createElement("input") as HTMLInputElement;
             secondsValue.className = "editTimeInput";
+            secondsValue.placeholder = "Secondes ...";
 
             timeValueEditContainer.append(hoursValue, minutesValue, secondsValue);
 
@@ -304,14 +307,6 @@ export class Display {
                  */
 
                 editTimeButton.addEventListener("click", (event:MouseEvent) => {
-                    let dateObj = new Date(e.totalTime * 1000);
-                    let hours = dateObj.getUTCHours();
-                    let minutes = dateObj.getUTCMinutes();
-                    let seconds = dateObj.getSeconds();
-
-                    hoursValue.value = hours.toString();
-                    minutesValue.value = minutes.toString();
-                    secondsValue.value = seconds.toString();
 
                     taskTime.remove();
                     taskTitle.remove();
@@ -323,21 +318,38 @@ export class Display {
 
                 })
 
+
+
+                let taskTime: HTMLParagraphElement = document.createElement("p") as HTMLParagraphElement;
                 confirmEditTimeButton.addEventListener("click", () => {
 
-                    let intHours = parseInt(hoursValue.value) * 3600;
-                    let intMinutes = parseInt(minutesValue.value) * 60;
-                    let intSeconds = parseInt(secondsValue.value);
+                    if (hoursValue.value !== "" && minutesValue.value !== "" && secondsValue.value !== "") {
+                        let intHours = parseInt(hoursValue.value) * 3600;
+                        let intMinutes = parseInt(minutesValue.value) * 60;
+                        let intSeconds = parseInt(secondsValue.value);
 
-                    let totalTimeInSeconds = intHours + intMinutes + intSeconds;
+                        let totalTimeInSeconds = intHours + intMinutes + intSeconds;
+
+                        e.totalTime = totalTimeInSeconds;
+
+                        let hoursEdit = Math.trunc(totalTimeInSeconds / 3600);
+                        let minutesEdit = Math.trunc(totalTimeInSeconds / 60);
+
+                        if (totalTimeInSeconds >= 60) {
+                            taskTime.innerHTML = `${minutesEdit} minutes`
+                        }
+                        if (minutesEdit >= 60) {
+                            taskTime.innerHTML = `${hoursEdit} heures`;
+                        }
+                        if (minutesEdit < 1) {
+                            taskTime.innerHTML = `${totalTimeInSeconds} secondes`;
+                        }
 
 
+                        localStorage.setItem("Projects", JSON.stringify(allProjectArray));
+                        location.reload();
+                    }
 
-
-                    confirmEditTimeButton.remove();
-                    timeValueEditContainer.remove();
-                    taskContainer.append(taskTime);
-                    taskContainer.append(editTimeButton);
                 })
 
                 let taskContainer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
@@ -346,17 +358,22 @@ export class Display {
                 let taskTitle: HTMLHeadingElement = document.createElement("h3") as HTMLHeadingElement;
                 taskTitle.innerHTML = e.title;
 
-                let taskTime: HTMLParagraphElement = document.createElement("p") as HTMLParagraphElement;
-
                 /**
                  * Convert seconds to hours minutes and seconds for each task time.
                  */
-                let dateObj = new Date(e.totalTime * 1000);
-                let hours = dateObj.getUTCHours();
-                let minutes = dateObj.getUTCMinutes();
-                let seconds = dateObj.getSeconds();
+                let taskTimeValue =  e.totalTime;
+                let hoursEdit = Math.trunc(taskTimeValue / 3600);
+                let minutesEdit = Math.trunc(taskTimeValue / 60);
 
-                taskTime.innerHTML = `${hours} h ${minutes} et ${seconds} s`;
+                if (taskTimeValue >= 60) {
+                    taskTime.innerHTML = `${minutesEdit} minutes`
+                }
+                if (minutesEdit >= 60) {
+                    taskTime.innerHTML = `${hoursEdit} heures`;
+                }
+                if (minutesEdit < 1) {
+                    taskTime.innerHTML = `${taskTimeValue} secondes`;
+                }
 
                 taskContainer.append(taskTitle);
                 taskContainer.append(taskTime);
