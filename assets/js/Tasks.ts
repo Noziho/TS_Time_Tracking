@@ -13,9 +13,6 @@ export class Tasks {
 
         let containerButtonAndInput: HTMLDivElement = document.createElement("div") as HTMLDivElement;
 
-        /**
-         * Make a task when clicked.
-         */
         addTaskButton.addEventListener("click", (e: MouseEvent) => {
 
 
@@ -42,7 +39,6 @@ export class Tasks {
 
 
             const timer: Timer = new Timer() as Timer;
-
             taskContainer.append(titleOfTask);
             allTasksContainer.append(taskContainer);
 
@@ -54,7 +50,7 @@ export class Tasks {
         })
 
         containerButtonAndInput.append(inputForNameTask, addTaskButton);
-
         functionalityContainer.append(containerButtonAndInput);
+        projectContainer.append(allTasksContainer);
     }
 }

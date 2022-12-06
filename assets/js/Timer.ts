@@ -3,7 +3,7 @@ import {Tasks} from "./Tasks";
 
 export class Timer {
 
-    public TimerButton (containerForButton : HTMLDivElement, project: any, taskTitle: HTMLParagraphElement, allProjectArray: Project[], i:number):void {
+    public TimerButton(containerForButton: HTMLDivElement, project: any, taskTitle: HTMLParagraphElement, allProjectArray: Project[], i: number): void {
 
         const containerTimer: HTMLDivElement = document.createElement("div") as HTMLDivElement;
         containerTimer.className = "containerTimer";
@@ -23,7 +23,11 @@ export class Timer {
          */
         timerButton.addEventListener("click",
             (e: MouseEvent) => {
-            timerButton.className = "activatedTimer";
+                timerButton.className = "activatedTimer";
+                let disabledButton: NodeListOf<Element> = document.querySelectorAll('.timerButton') as NodeListOf<Element>;
+                disabledButton.forEach((button: Element) => {
+                    button.className = "disabled";
+                })
                 timerButton.remove();
                 containerTimer.append(stopTimer);
 
@@ -32,10 +36,10 @@ export class Timer {
                 /**
                  * Get time from localStorage.
                  */
-                if (project.tasks[i-1].totalTime < 0) {
+                if (project.tasks[i - 1].totalTime < 0) {
                     secondsIterator = 0;
-                }else {
-                    secondsIterator = project.tasks[i-1].totalTime;
+                } else {
+                    secondsIterator = project.tasks[i - 1].totalTime;
                 }
 
 

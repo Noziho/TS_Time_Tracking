@@ -122,7 +122,6 @@ export class Display {
             timeDetailsContainer.append(totalTimeContainer);
             timeDetailsContainer.append(timeDetails);
             timeDetailsContainer.append(seeDetailsButton);
-            projectContainer.append(timeDetailsContainer);
 
             /**
              * Display all task from all project when the page is loading.
@@ -151,6 +150,7 @@ export class Display {
 
                 })
             }
+            projectContainer.append(timeDetailsContainer);
             projectContainer.append(functionalityContainer);
             allProjectsContainer?.prepend(projectContainer);
         })
