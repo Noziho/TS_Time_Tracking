@@ -294,12 +294,8 @@ export class Display {
                  */
                 taskEditValidation.addEventListener("click" ,() => {
                     e.title = inputTaskEdit.value;
-                    taskTitle.innerHTML = e.title;
                     localStorage.setItem("Projects", JSON.stringify(allProjectArray));
-                    taskEditValidation.remove();
-                    inputTaskEdit.remove();
-                    taskContainer.append(editTaskButton);
-                    taskContainer.append(taskTitle);
+                    location.reload();
                 })
 
                 /**
