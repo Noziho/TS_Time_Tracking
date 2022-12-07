@@ -9,7 +9,8 @@
 </head>
 <body>
 <header class="padding-1">
-    <h1><a href="http://localhost:8080">Time tracker</a></h1>
+    <h1><a href="/?c=home">Time tracker</a></h1>
+    <a href="/?c=user&a=register">Inscription</a>
 </header>
 
 <main><?= $html ?></main>
