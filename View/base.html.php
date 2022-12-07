@@ -10,7 +10,15 @@
 <body>
 <header class="padding-1">
     <h1><a href="/?c=home">Time tracker</a></h1>
-    <a href="/?c=user&a=register">Inscription</a>
+    <?php
+        if (!isset($_SESSION['user'])) {?>
+            <a href="/?c=user&a=register">Inscription</a>
+            <a href="/?c=user&a=login">Login</a><?php
+        }else {?>
+            <a href="/?c=user&a=logout">Déconnexion</a><?php
+        }
+    ?>
+
 </header>
 
 <main><?= $html ?></main>
