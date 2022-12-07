@@ -12,13 +12,8 @@
     <h1><a href="http://localhost:8080">Time tracker</a></h1>
 </header>
 
-<div class="container">
-    <div class="createProjectContainer">
-        <input type="text" class="padding-1 margin-top-1" required minlength="4">
-    </div>
+<main><?= $html ?></main>
 
-    <div class="projects_container padding-4"></div>
-</div>
 
 <script src="/build/js/app-bundle.js"></script>
 </body>

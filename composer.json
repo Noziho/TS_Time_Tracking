@@ -1,0 +1,17 @@
+{
+    "name": "noahd/ts_time_tracking",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Noziho",
+            "email": "noah.decroix3@gmail.com"
+        }
+    ],
+    "require": {
+        "gabordemooij/redbean": "^5.7"
+    }
+}
