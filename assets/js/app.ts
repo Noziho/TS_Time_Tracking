@@ -13,10 +13,4 @@ let display: Display = new Display() as Display;
 display.displayProjectFromLocalStorage();
 display.displayProjectDetails();
 
-/**
- * window.onunload = function() {
- *     localStorage.setItem("TEST", "register on close 22233322");
- * }
- */
-
 console.log(JSON.parse(localStorage.getItem("Projects")as string));
