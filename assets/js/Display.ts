@@ -96,7 +96,7 @@ export class Display {
 
             seeDetailsButton.addEventListener("click", () => {
                 localStorage.setItem("currentProject", JSON.stringify(allProjectArray.indexOf(element)));
-                location.assign('../../view/projectDetails.html');
+                location.assign('../../View/projectDetails.html');
             })
 
 

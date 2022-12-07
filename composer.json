@@ -12,6 +12,7 @@
         }
     ],
     "require": {
-        "gabordemooij/redbean": "^5.7"
+        "gabordemooij/redbean": "^5.7",
+        "symfony/error-handler": "^6.2"
     }
 }
