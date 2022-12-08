@@ -38,8 +38,11 @@ class ProjectController extends AbstractController
         }
     }
 
-    public static function deleteProject (int $id)
+    public static function deleteProject (int $id = null)
     {
+        if ($id === null) {
+            header("Location: /?c=home");
+        }
         if (!isset($_SESSION['user'])) {
             header("Location: /?c=home");
             exit();

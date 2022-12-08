@@ -16,15 +16,18 @@ class TasksController extends AbstractController
     /**
      * @throws SQL
      */
-    public static function addTask(int $id)
+    public static function addTask(int $id = null)
     {
-
-        //TODO: passer l'id du projet et pas le nom du projet pour cause de doublon de nom.
+        if (null == $id) {
+            header("Location: /?c=home");
+            exit();
+        }
         if (isset($_POST['submit'])) {
             if (self::formIsset('titleTask')) {
                 if (R::findOne('project', 'id=?', [$id])) {
                     $project = R::findOne('project', 'id=?', [$id]);
-                } else {
+                }
+                else {
                     header("Location: /?c=home&f=projectDontExist");
                     exit();
                 }
