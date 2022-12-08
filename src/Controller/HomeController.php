@@ -7,6 +7,13 @@ class HomeController extends AbstractController
 
     public function index()
     {
-        self::render('home/home');
+        if (isset($_SESSION['user'])) {
+            self::render('home/home', [
+                'user_project' => $_SESSION['user']->ownProjectList,
+            ]);
+        }else {
+            self::render('home/home');
+        }
+
     }
 }
