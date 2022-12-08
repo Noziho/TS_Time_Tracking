@@ -17,10 +17,23 @@ if (isset($data['user_project'])) {
             foreach ($projects as $project) {?>
                 <div class="project margin-2">
                     <div><h2><?= $project->project_name; ?></h2></div>
-                    <form action="/?c=tasks&a=addtask&project_name=<?= $project->project_name ?>" method="post">
+                    <form action="/?c=tasks&a=addtask&id=<?= $project->id ?>" method="post">
                         <input type="text" name="titleTask">
                         <input type="submit" name="submit">
                     </form>
+
+                    <div class="allTasksContainer">
+
+                    <?php
+                        foreach ($project->ownTaskList as $task) {?>
+                            <div class="task padding-1 margin-1">
+                                <p><?= $task->taskname ?></p>
+                            </div>
+
+                    <?php
+                        }
+                    ?>
+                    </div>
                 </div>
 
                 <?php
@@ -28,7 +41,7 @@ if (isset($data['user_project'])) {
         }
         else {?>
             <div>
-                <h2>Pour tes projets faut te log tocard</h2>
+                <h2>Pour tes projets il faut te log tocard</h2>
             </div>
 
         <?php
