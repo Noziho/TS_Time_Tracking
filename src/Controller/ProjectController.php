@@ -37,4 +37,27 @@ class ProjectController extends AbstractController
 
         }
     }
+
+    public static function deleteProject (int $id)
+    {
+        if (!isset($_SESSION['user'])) {
+            header("Location: /?c=home");
+            exit();
+        }
+
+        $project = R::findOne('project', 'id=?', [$id]);
+
+        if (!$project) {
+            header("Location: /?c=home");
+            exit();
+        }
+        if ($_SESSION['user']->id !== $project->user_id) {
+            header("Location: /?c=home");
+            exit();
+        }
+        if (isset($_POST['submit'])) {
+            R::trash($project);
+            header("Location: /?c=home&f=deleteSuccess");
+        }
+    }
 }

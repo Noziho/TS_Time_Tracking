@@ -17,7 +17,7 @@ if (isset($data['user_project'])) {
             foreach ($projects as $project) {?>
                 <div class="project margin-2">
                     <div><h2><?= $project->project_name; ?></h2></div>
-                    <form action="/?c=tasks&a=addtask&id=<?= $project->id ?>" method="post">
+                    <form action="/?c=tasks&a=addTask&id=<?= $project->id ?>" method="post">
                         <input type="text" name="titleTask">
                         <input type="submit" name="submit">
                     </form>
@@ -34,6 +34,10 @@ if (isset($data['user_project'])) {
                         }
                     ?>
                     </div>
+
+                    <form action="/?c=project&a=deleteProject&id=<?= $project->id ?>" method="post">
+                        <input type="submit" name="submit" value="deleteProject">
+                    </form>
                 </div>
 
                 <?php
