@@ -66,7 +66,7 @@ class UserController extends AbstractController
 
                 $user = R::findOne('user', 'email=?', [$email]);
                 if ($user !== null) {
-                    if ($password === $user->password) {
+                    if (password_verify($password, $user->password)) {
                         $_SESSION['user'] = $user;
                         header("Location: /?c=home&f=SUCESsLOGINGE");
                         exit();

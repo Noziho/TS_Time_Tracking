@@ -18,6 +18,8 @@ class TasksController extends AbstractController
      */
     public static function addTask (string $project_name)
     {
+
+        //TODO: passer l'id du projet et pas le nom du projet pour cause de doublon de nom.
         if (isset($_POST['submit'])) {
             if (self::formIsset('titleTask')) {
                 if (R::findOne('project', 'project_name=?', [$project_name])) {
@@ -43,7 +45,10 @@ class TasksController extends AbstractController
 
                 R::store($project);
 
-                self::render('home/home');
+                $user = R::findOne('user', 'email=?', [$_SESSION['user']->email]);
+                self::render('home/home', [
+                    'user_project' => $user->ownProjectList,
+                ]);
 
             }
         }
