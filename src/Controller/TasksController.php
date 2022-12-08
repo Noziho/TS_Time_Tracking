@@ -26,15 +26,24 @@ class TasksController extends AbstractController
                 else {
                     header("Location: /?c=home&f=projectDontExist");
                 }
-                $task = R::dispense('task');
-                $task->taskname = filter_var($_POST['titleTask'], FILTER_SANITIZE_STRING);
-                $task->time = 0;
-                $project->ownTasksList[] = $task;
+                $taskname = filter_var($_POST['titleTask'], FILTER_SANITIZE_STRING);
 
+                $task = R::findOne('task', 'taskname=?', [$taskname]);
+
+                if (null === $task) {
+                    $task = R::dispense('task');
+                    $task->taskname = $taskname;
+                    $task->time = 0;
+                    $project->ownTasksList[] = $task;
+
+                } else {
+                    header("Location: /?c=home&f=TaskAlreadyExist");
+                    exit();
+                }
 
                 R::store($project);
 
-                header("Location: /?c=home&f=taskAddedSuccess");
+                self::render('home/home');
 
             }
         }
