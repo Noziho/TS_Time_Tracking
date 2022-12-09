@@ -29,6 +29,10 @@ if (isset($data['user_project'])) {
                             <div class="task padding-1 margin-1">
                                 <p><?= $task->taskname ?></p>
                             </div>
+                            <button class="timer">
+                                Timer
+                            </button>
+
 
                     <?php
                         }
