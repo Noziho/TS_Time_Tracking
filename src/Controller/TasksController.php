@@ -49,4 +49,20 @@ class TasksController extends AbstractController
             }
         }
     }
+
+    public static function timeRegister (int $id = null)
+    {
+        if (null === $id) {
+            http_response_code(404);
+            exit;
+        }
+        $task = R::findOne('task', 'id=?', [$id]);
+
+        echo json_encode([
+           'test' => "TestFetch",
+            'task' => $task,
+        ]);
+        http_response_code(200);
+        exit;
+    }
 }

@@ -26,18 +26,15 @@ if (isset($data['user_project'])) {
 
                     <?php
                         foreach ($project->ownTaskList as $task) {?>
-                            <div class="task padding-1 margin-1">
+                            <div id="<?= $task->id ?>" class="task padding-1 margin-1">
                                 <p><?= $task->taskname ?></p>
                             </div>
-                            <button class="timer">
-                                Timer
-                            </button>
-
-
                     <?php
                         }
                     ?>
                     </div>
+
+                    <p class="totalTime Project"></p>
 
                     <form action="/?c=project&a=deleteProject&id=<?= $project->id ?>" method="post">
                         <input type="submit" name="submit" value="deleteProject">

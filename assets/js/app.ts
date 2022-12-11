@@ -1,7 +1,11 @@
 import '../styles/style.scss';
-import {Timer} from "./Timer";
+import {Display} from "./Display";
 
 
+let tasks: NodeListOf<Element> = document.querySelectorAll('.task') as NodeListOf<Element>;
 
-let timer = new Timer();
-timer.TimerButton();
+if (tasks) {
+    let display = new Display();
+    display.display();
+}
+
