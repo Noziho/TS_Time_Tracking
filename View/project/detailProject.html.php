@@ -16,7 +16,7 @@ if (isset($data['project'])) {
                 foreach ($project->ownTaskList as $task) { ?>
                 <div id="<?= $task->id ?>" class="task padding-1 margin-1">
                     <p><?= $task->taskname ?></p>
-                    </div><?php
+                </div><?php
                 }
                 ?>
             </div>
