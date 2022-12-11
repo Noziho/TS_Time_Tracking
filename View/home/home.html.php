@@ -34,7 +34,9 @@ if (isset($data['user_project'])) {
                     ?>
                     </div>
 
-                    <p class="totalTime Project"></p>
+                    <div>
+                        <a href="/?c=project&a=showProject&id=<?= $project->id ?>">Voir details</a>
+                    </div>
 
                     <form action="/?c=project&a=deleteProject&id=<?= $project->id ?>" method="post">
                         <input type="submit" name="submit" value="deleteProject">

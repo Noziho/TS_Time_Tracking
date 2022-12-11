@@ -63,4 +63,22 @@ class ProjectController extends AbstractController
             header("Location: /?c=home&f=deleteSuccess");
         }
     }
+
+    public static function showProject (int $id = null)
+    {
+        if (null === $id) {
+            header("Location: /?c=home");
+        }
+
+        $project = R::findOne('project', 'id=?', [$id]);
+
+        if (!$project) {
+            header("Location: /?c=home");;
+            exit;
+        }
+
+        self::render('project/detailProject', [
+            'project' => $project,
+        ]);
+    }
 }
