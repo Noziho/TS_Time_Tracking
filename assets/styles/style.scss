@@ -69,6 +69,10 @@ body {
   background-color: darken(vars.$bg-color, 10%);
 }
 
+.taskDetails {
+  @extend .task;
+}
+
 .disabled {
   display: none;
 }
@@ -159,6 +163,26 @@ button {
   button {
     margin-top: 1rem;
   }
+}
+
+.containerTitleProject {
+  width: 100%;
+}
+
+.labelContainer {
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+#addTaskButton {
+  padding: 0.5rem;
+  border-radius: 360px;
+  border-style: none;
+  width: 10%;
+}
+
+#titleTask {
+  padding: 0.5rem;
 }
 
 @media screen and (max-width: 1300px) {

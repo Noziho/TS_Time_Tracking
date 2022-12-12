@@ -7,7 +7,7 @@ if (isset($data['user_project'])) {
 
 <div class="container">
     <form class="createProjectContainer" action="/?c=project&a=addproject" method="post">
-        <input type="text" class="padding-1 margin-top-1" name="titleProject" required minlength="4">
+        <input type="text" class="padding-1 margin-top-1" name="titleProject" required minlength="4" placeholder="Nom du projet ...">
         <input type="submit" name="submit" value="addProject">
     </form>
 
@@ -16,10 +16,15 @@ if (isset($data['user_project'])) {
         if (isset($_SESSION['user'])) {
             foreach ($projects as $project) {?>
                 <div class="project margin-2">
-                    <div><h2><?= $project->project_name; ?></h2></div>
+                    <div class="containerTitleProject">
+                        <h2><?= $project->project_name; ?></h2>
+                    </div>
                     <form action="/?c=tasks&a=addTask&id=<?= $project->id ?>" method="post">
-                        <input type="text" name="titleTask">
-                        <input type="submit" name="submit">
+                        <div class="labelContainer">
+                            <label for="titleTask">Ajouter une tâche :</label>
+                        </div>
+                        <input type="text" name="titleTask" id="titleTask" placeholder="Nom de la tâche ...">
+                        <input id="addTaskButton" type="submit" name="submit" value="+">
                     </form>
 
                     <div class="allTasksContainer">
