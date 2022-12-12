@@ -68,6 +68,7 @@ class ProjectController extends AbstractController
     {
         if (null === $id) {
             header("Location: /?c=home");
+            exit;
         }
 
         $project = R::findOne('project', 'id=?', [$id]);

@@ -16,7 +16,11 @@ if (isset($data['project'])) {
                 foreach ($project->ownTaskList as $task) { ?>
                 <div id="<?= $task->id ?>" class="task padding-1 margin-1">
                     <p><?= $task->taskname ?></p>
-                </div><?php
+                </div>
+
+                    <form action="/?c=tasks&a=deleteTask&id=<?= $task->id ?>&pId=<?= $project->id ?>" method="post">
+                        <input type="submit" name="submit" value="Supprimer">
+                    </form><?php
                 }
                 ?>
             </div>

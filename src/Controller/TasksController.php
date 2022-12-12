@@ -60,9 +60,28 @@ class TasksController extends AbstractController
 
         echo json_encode([
            'test' => "TestFetch",
-            'task' => $task,
+           'task' => $task,
         ]);
         http_response_code(200);
         exit;
+    }
+
+    public static function deleteTask (int $id = null, int $pId = null) {
+        if (null === $id || null === $pId) {
+            header("Location: /?c=home");
+            exit;
+        }
+
+        $task = R::findOne('task', 'id=?', [$id]);
+
+        if (!$task) {
+            header("Location: /?c=home");
+            exit;
+        }
+
+        R::trash($task);
+
+        ProjectController::showProject($pId);
+
     }
 }
