@@ -60,7 +60,10 @@ class TasksController extends AbstractController
             exit;
         }
         $task = R::findOne('task', 'id=?', [$id]);
-        $task->time = $time;
+
+        if (isset($_SESSION['time'])) {
+            $task->time = $time + $task->time;
+        }
 
         R::store($task);
         echo json_encode([
