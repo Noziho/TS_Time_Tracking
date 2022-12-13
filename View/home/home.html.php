@@ -1,4 +1,7 @@
 <?php
+
+use App\Controller\AbstractController;
+
 if (isset($data['user_project'])) {
     $projects = $data['user_project'];
 }
@@ -19,12 +22,16 @@ if (isset($data['user_project'])) {
                     <div class="containerTitleProject">
                         <h2><?= $project->project_name; ?></h2>
                     </div>
-                    <form action="/?c=tasks&a=addTask&id=<?= $project->id ?>" method="post">
+                    <form id="formAddTask" action="/?c=tasks&a=addTask&id=<?= $project->id ?>" method="post">
                         <div class="labelContainer">
                             <label for="titleTask">Ajouter une tâche :</label>
                         </div>
-                        <input type="text" name="titleTask" id="titleTask" placeholder="Nom de la tâche ...">
-                        <input id="addTaskButton" type="submit" name="submit" value="+">
+
+                        <div id="addTaskContainer">
+                            <input type="text" name="titleTask" id="titleTask" placeholder="Nom de la tâche ...">
+                            <input id="addTaskButton" type="submit" name="submit" value="Ajouter la tâche">
+                        </div>
+
                     </form>
 
                     <div class="allTasksContainer">
@@ -39,13 +46,23 @@ if (isset($data['user_project'])) {
                     ?>
                     </div>
 
-                    <div>
-                        <a href="/?c=project&a=showProject&id=<?= $project->id ?>">Voir details</a>
+                    <div class="totalTime margin-top-1">
+                        <?php
+                        $hours = round($project->project_time /3600);
+                        $minutes = round($project->project_time /60);
+                        AbstractController::getHMSFormatDisplay($hours, $minutes, $project->project_time, '<p>', 'Temps total du projet: ');
+                        ?>
                     </div>
 
-                    <form action="/?c=project&a=deleteProject&id=<?= $project->id ?>" method="post">
-                        <input type="submit" name="submit" value="deleteProject">
-                    </form>
+                    <div class="projectOptions">
+                        <div>
+                            <a href="/?c=project&a=showProject&id=<?= $project->id ?>">Voir details</a>
+                        </div>
+
+                        <form action="/?c=project&a=deleteProject&id=<?= $project->id ?>" method="post">
+                            <input type="submit" name="submit" value="Supprimer projet" class="deleteProjectButton">
+                        </form>
+                    </div>
                 </div>
 
                 <?php

@@ -45,9 +45,9 @@ body {
 }
 
 .project {
-  width: 30%;
-  min-height: 30rem;
-  max-height: 30rem;
+  width: 35%;
+  min-height: 34rem;
+  max-height: 34rem;
   background: darken(vars.$bg-color, 5%);
   word-break: break-all;
   padding: 1rem;
@@ -62,11 +62,22 @@ body {
 }
 
 .task {
-  width: 100%;
+  width: 90%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   background-color: darken(vars.$bg-color, 10%);
+}
+
+#formAddTask {
+  width: 100%;
+}
+
+#addTaskContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .taskDetails {
@@ -88,8 +99,9 @@ body {
 .allTasksContainer {
   min-height: 15rem;
   max-height: 15rem;
-  width: 65%;
-  overflow: scroll;
+  width: 100%;
+  overflow-x: unset;
+  overflow-y: scroll;
 }
 
 .timeDetails {
@@ -178,10 +190,28 @@ button {
   padding: 0.5rem;
   border-radius: 360px;
   border-style: none;
-  width: 10%;
+  width: 25%;
 }
 
 #titleTask {
+  padding: 0.5rem;
+}
+
+.totalTime {
+  width: 100%;
+}
+
+.projectOptions {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.deleteProjectButton {
+  border: none;
+  border-radius: 32px;
   padding: 0.5rem;
 }
 
