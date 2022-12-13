@@ -33,14 +33,15 @@ abstract class AbstractController
     {
         if ($text !== null) {
             if ($hours >= 1) { ?>
-                <?= $element ?> <?= $text ?> <?= round($hours) ?>h<?= $element ?><?php
+                <?= $element ?> <?= $text ?> <?= $hours ?>h<?= $element ?><?php
                 $minutes = 0;
                 $seconds = 0;
             }
 
-            if ($hours < 1 && $seconds < 1) { ?>
-                <?= $element ?> <?= $text ?> <?= round($minutes) ?>m<?= $element ?><?php
+            if ($minutes >= 1) {?>
+                <?= $element ?> <?= $text ?> <?= $minutes ?>m<?= $element ?><?php
                 $seconds = 0;
+                $hours = 0;
             }
 
             if ($minutes < 1 && $hours < 1) { ?>
@@ -51,14 +52,15 @@ abstract class AbstractController
         }
         else {
             if ($hours >= 1) { ?>
-                <?= $element ?><?= round($hours) ?>h<?= $element ?><?php
+                <?= $element ?><?= $hours ?>h<?= $element ?><?php
                 $minutes = 0;
                 $seconds = 0;
             }
 
-            if ($hours < 1 && $seconds < 1) { ?>
-                <?= $element ?><?= round($minutes) ?>m<?= $element ?><?php
+            if ($minutes >= 1) { ?>
+                <?= $element ?><?= $minutes ?>m<?= $element ?><?php
                 $seconds = 0;
+                $hours = 0;
             }
 
             if ($minutes < 1 && $hours < 1) { ?>
