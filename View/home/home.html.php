@@ -69,7 +69,7 @@ if (isset($data['user_project'])) {
         }
         else {?>
             <div>
-                <h2>Pour tes projets il faut te log tocard</h2>
+                <h2>Bienvenue sur time tracker, pour accéder à nos fonctionnalités veuillez vous inscrire.</h2>
             </div>
 
         <?php

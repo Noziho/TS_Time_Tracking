@@ -44,6 +44,19 @@ body {
   }
 }
 
+header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  div {
+    a {
+      margin-inline: 1rem;
+    }
+  }
+}
+
 .project {
   width: 35%;
   min-height: 34rem;
@@ -216,6 +229,26 @@ button {
   border: none;
   border-radius: 32px;
   padding: 0.5rem;
+}
+
+.form {
+  width: 70%;
+  background: darken(vars.$bg-color, 5%);
+  padding: 2rem;
+  margin-top: 15rem;
+
+  label {
+    display: block;
+    margin-top: 1rem;
+  }
+
+  input {
+    margin-top: 1rem;
+    width: 35%;
+    padding: 1rem;
+    border: none;
+  }
+
 }
 
 @media screen and (max-width: 1300px) {
