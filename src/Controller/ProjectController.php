@@ -24,6 +24,7 @@ class ProjectController extends AbstractController
                 $project_name = filter_var($_POST['titleProject'], FILTER_SANITIZE_STRING);
                 $project = R::dispense('project');
                 $project->project_name = $project_name;
+                $project->project_time = 0;
                 $user->ownProjectList[] = $project;
 
                 R::store($user);

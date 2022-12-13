@@ -11,11 +11,15 @@ if (isset($data['project'])) {
             <div class="containerTitleProject">
                 <h2><?= $project->project_name ?></h2>
             </div>
+            <div>
+                <h3>Temps total du projet: <?= $project->project_time ?></h3>
+            </div>
             <div class="allTasksContainer">
                 <?php
                 foreach ($project->ownTaskList as $task) { ?>
                 <div id="<?= $task->id ?>" class="taskDetails padding-1 margin-1">
                     <p><?= $task->taskname ?></p>
+                    <p><?= $task->time ?></p>
                     <form action="/?c=tasks&a=deleteTask&id=<?= $task->id ?>&pId=<?= $project->id ?>" method="post">
                         <input type="submit" name="submit" value="Supprimer">
                     </form>

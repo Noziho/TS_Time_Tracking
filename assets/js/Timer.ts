@@ -52,14 +52,12 @@ export class Timer {
                         elem.className = "timer";
                     })
                 timerButton.className = "timer";
-                        fetch(`/?c=tasks&a=timeRegister&id=${elemId}`)
+                        fetch(`/?c=tasks&a=timeRegister&id=${elemId}&time=${secondsIterator}`)
                             .then(response => response.json())
                             .then(response => {
                                 console.log(response.task);
                             })
-
-                location.reload();
-                })
+             })
         })
 
         containerButton.append(timerButton);
