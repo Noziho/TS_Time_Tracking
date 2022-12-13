@@ -92,7 +92,8 @@ class TasksController extends AbstractController
         exit;
     }
 
-    public static function deleteTask (int $id = null, int $pId = null) {
+    public static function deleteTask (int $id = null, int $pId = null)
+    {
         if (null === $id || null === $pId) {
             header("Location: /?c=home");
             exit;
@@ -108,5 +109,66 @@ class TasksController extends AbstractController
         R::trash($task);
 
         ProjectController::showProject($pId);
+    }
+
+    /**
+     * @throws SQL
+     */
+    public static function editTime (int $id = null)
+    {
+        if (null === $id ) {
+            header("Location: /?c=home");
+            exit;
+        }
+        $task = R::findOne('task', 'id=?', [$id]);
+
+        if (!$task) {
+            header("Location: /?c=home");
+            exit;
+        }
+
+        $hours = filter_var($_POST['hours'], FILTER_SANITIZE_NUMBER_INT);
+
+        if ($hours !== 0) {
+            $hours = filter_var($_POST['hours'], FILTER_SANITIZE_NUMBER_INT) * 3600;
+        }
+
+        $minutes = filter_var($_POST['minutes'], FILTER_SANITIZE_NUMBER_INT);
+
+        if ($minutes !== 0) {
+            $minutes = filter_var($_POST['minutes'], FILTER_SANITIZE_NUMBER_INT) * 60;
+
+        }
+
+        $seconds = filter_var($_POST['seconds'], FILTER_SANITIZE_NUMBER_INT);
+
+        if ($hours < 0 || $minutes < 0 || $seconds < 0) {
+            header("Location: /?c=home&f=invalidNegativeArgument");
+            exit;
+        }
+
+        $timeValue = $hours + $minutes + $seconds;
+
+        $task->time = $timeValue;
+
+        R::store($task);
+
+        $project = R::findOne('project', 'id=?', [$task->project_id]);
+
+        if (!$project) {
+            header("Location: /?c=home");
+            exit();
+        }
+
+        $allTaskTime = [];
+        foreach ($project->ownTaskList as $task) {
+            $allTaskTime[] += $task->time;
+        }
+
+        $project->project_time = array_sum($allTaskTime);
+
+        R::store($project);
+
+        header("Location: /?c=home&f=successEditTime");
     }
 }

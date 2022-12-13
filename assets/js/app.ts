@@ -8,4 +8,3 @@ if (tasks) {
     let display = new Display();
     display.display();
 }
-

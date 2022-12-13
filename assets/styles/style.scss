@@ -82,6 +82,8 @@ body {
 
 .taskDetails {
   @extend .task;
+  width: 100%;
+  padding: 2rem;
 }
 
 .disabled {

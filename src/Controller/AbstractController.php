@@ -29,30 +29,46 @@ abstract class AbstractController
         return true;
     }
 
-    public static function getHMSFormatDisplay (int $hours, int $minutes, int $seconds, string $element, string $text = null): void {
+    public static function getHMSFormatDisplay(int|float $hours, int|float $minutes, int|float $seconds, string $element, string $text = null): void
+    {
+        if ($text !== null) {
+            if ($hours >= 1) { ?>
+                <?= $element ?> <?= $text ?> <?= round($hours) ?>h<?= $element ?><?php
+                $minutes = 0;
+                $seconds = 0;
+            }
 
-        if (null === $text) {
-            if ($seconds >= 60) {?>
-                <?=$element?><?= $minutes ?> m<?= $element ?><?php
+            if ($hours < 1 && $seconds < 1) { ?>
+                <?= $element ?> <?= $text ?> <?= round($minutes) ?>m<?= $element ?><?php
+                $seconds = 0;
             }
-            if ($minutes >=60) {?>
-                <?=$element?><?= $hours ?> h<?=$element?><?php
-            }
-            if ($minutes < 1) {?>
-                <?=$element?><?= $seconds ?> s<?=$element?><?php
+
+            if ($minutes < 1 && $hours < 1) { ?>
+                <?= $element ?> <?= $text ?> <?= $seconds ?>s<?= $element ?><?php
+                $hours = 0;
+                $minutes = 0;
             }
         }
         else {
-            if ($seconds >= 60) {?>
-                <?=$element?> <?= $text ?> <?= $minutes ?> m<?= $element ?><?php
+            if ($hours >= 1) { ?>
+                <?= $element ?><?= round($hours) ?>h<?= $element ?><?php
+                $minutes = 0;
+                $seconds = 0;
             }
-            if ($minutes >=60) {?>
-                <?=$element?> <?= $text ?> <?= $hours ?> h<?=$element?><?php
+
+            if ($hours < 1 && $seconds < 1) { ?>
+                <?= $element ?><?= round($minutes) ?>m<?= $element ?><?php
+                $seconds = 0;
             }
-            if ($minutes < 1) {?>
-                <?=$element?> <?= $text ?> <?= $seconds ?> s<?=$element?><?php
+
+            if ($minutes < 1 && $hours < 1) { ?>
+                <?= $element ?><?= $seconds ?>s<?= $element ?><?php
+                $hours = 0;
+                $minutes = 0;
             }
         }
+
+
     }
 
 }

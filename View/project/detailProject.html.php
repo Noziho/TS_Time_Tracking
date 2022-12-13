@@ -16,13 +16,27 @@ if (isset($data['project'])) {
             </div>
             <div>
                 <?php
-                /**
-                 * Display format H::M::S
-                 */
-                $hours = round($project->project_time /3600);
-                $minutes = round($project->project_time /60);
 
-                AbstractController::getHMSFormatDisplay($hours, $minutes, $project->project_time, '<h3>', 'Temps total: ');
+                $hours = ceil($project->project_time / 3600);
+                $minutes = ceil($project->project_time / 60);
+                $seconds = $project->project_time;
+                    if ($hours >= 1) {?>
+                        <h3>Temps total: <?= $hours ?>h</h3><?php
+                        $minutes = 0;
+                        $seconds = 0;
+                    }
+
+                    if ($hours < 1 && $seconds < 1) {?>
+                        <h3>Temps total: <?= $minutes ?>m</h3><?php
+                        $seconds = 0;
+                    }
+
+                    if ($minutes < 1 && $hours < 1) {?>
+                        <h3>Temps total: <?= $seconds ?>s</h3><?php
+                        $hours = 0;
+                        $minutes = 0;
+                    }
+
                 ?>
             </div>
             <div class="allTasksContainer">
@@ -31,13 +45,36 @@ if (isset($data['project'])) {
                 <div id="<?= $task->id ?>" class="taskDetails padding-1 margin-1">
                     <p><?= $task->taskname ?></p>
                     <?php
-                        $hours = round($task->time /3600);
-                        $minutes = round($task->time /60);
+                    $hours = ceil($task->time / 3600);
+                    $minutes = ceil($task->time / 60);
+                    $seconds = $task->time;
+                    if ($hours >= 1) {?>
+                        <p><?= $hours ?>h</p><?php
+                        $minutes = 0;
+                        $seconds = 0;
+                    }
 
-                        AbstractController::getHMSFormatDisplay($hours, $minutes, $task->time, '<p>');
+                    if ($hours < 1 && $seconds < 1) {?>
+                        <p><?= $minutes ?>m</p><?php
+                        $seconds = 0;
+                    }
+
+                    if ($minutes < 1 && $hours < 1) {?>
+                        <p><?= $seconds ?>s</p><?php
+                        $hours = 0;
+                        $minutes = 0;
+                    }
+
                     ?>
                     <form action="/?c=tasks&a=deleteTask&id=<?= $task->id ?>&pId=<?= $project->id ?>" method="post">
                         <input type="submit" name="submit" value="Supprimer">
+                    </form>
+
+                    <form action="/?c=tasks&a=editTime&id=<?= $task->id ?>" method="post">
+                        <input type="number" name="hours" placeholder="Heures ..." required>
+                        <input type="number" name="minutes" placeholder="Minutes ..." required>
+                        <input type="number" name="seconds" placeholder="Secondes ..." required>
+                        <input type="submit" name="submit" value="Modifier le temps">
                     </form>
                 </div><?php
                 }
