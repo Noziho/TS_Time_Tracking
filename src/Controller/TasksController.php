@@ -45,7 +45,6 @@ class TasksController extends AbstractController
                 self::render('home/home', [
                     'user_project' => $user->ownProjectList,
                 ]);
-
             }
         }
     }
@@ -66,6 +65,25 @@ class TasksController extends AbstractController
         }
 
         R::store($task);
+
+        /**
+         * Add all task time to project_time
+         */
+        $project = R::findOne('project', 'id=?', [$task->project_id]);
+
+        if (!$project) {
+            header("Location: /?c=home");
+            exit();
+        }
+
+        $allTaskTime = [];
+        foreach ($project->ownTaskList as $task) {
+            $allTaskTime[] += $task->time;
+        }
+
+        $project->project_time = array_sum($allTaskTime);
+
+        R::store($project);
         echo json_encode([
            'test' => "TestFetch",
            'task' => $task,
@@ -90,6 +108,5 @@ class TasksController extends AbstractController
         R::trash($task);
 
         ProjectController::showProject($pId);
-
     }
 }

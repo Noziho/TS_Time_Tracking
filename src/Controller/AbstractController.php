@@ -29,4 +29,30 @@ abstract class AbstractController
         return true;
     }
 
+    public static function getHMSFormatDisplay (int $hours, int $minutes, int $seconds, string $element, string $text = null): void {
+
+        if (null === $text) {
+            if ($seconds >= 60) {?>
+                <?=$element?><?= $minutes ?> m<?= $element ?><?php
+            }
+            if ($minutes >=60) {?>
+                <?=$element?><?= $hours ?> h<?=$element?><?php
+            }
+            if ($minutes < 1) {?>
+                <?=$element?><?= $seconds ?> s<?=$element?><?php
+            }
+        }
+        else {
+            if ($seconds >= 60) {?>
+                <?=$element?> <?= $text ?> <?= $minutes ?> m<?= $element ?><?php
+            }
+            if ($minutes >=60) {?>
+                <?=$element?> <?= $text ?> <?= $hours ?> h<?=$element?><?php
+            }
+            if ($minutes < 1) {?>
+                <?=$element?> <?= $text ?> <?= $seconds ?> s<?=$element?><?php
+            }
+        }
+    }
+
 }

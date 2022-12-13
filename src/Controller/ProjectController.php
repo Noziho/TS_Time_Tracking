@@ -7,7 +7,6 @@ use RedBeanPHP\RedException\SQL;
 
 class ProjectController extends AbstractController
 {
-
     public function index()
     {
         // TODO: Implement index() method.
@@ -28,14 +27,10 @@ class ProjectController extends AbstractController
                 $user->ownProjectList[] = $project;
 
                 R::store($user);
-
                 self::render('home/home', [
                     'user_project' => $user->ownProjectList,
                 ]);
-
             }
-
-
         }
     }
 

@@ -7,7 +7,6 @@ use RedBeanPHP\RedException\SQL;
 
 class UserController extends AbstractController
 {
-
     public function index()
     {
 
@@ -31,7 +30,6 @@ class UserController extends AbstractController
                     exit();
                 }
 
-
                 $user = R::findOne('user', 'email=?', [$email]);
 
                 if (null === $user) {
@@ -46,11 +44,8 @@ class UserController extends AbstractController
                     exit();
                 }
 
-
                 header("Location: /?c=user&a=login&f=success");
             }
-
-
         }
     }
 
@@ -61,10 +56,8 @@ class UserController extends AbstractController
             if (self::formIsset('email', 'password')) {
                 $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
                 $password = filter_var($_POST['password'], FILTER_SANITIZE_STRING);
-
-                //$user = R::dispense('user');
-
                 $user = R::findOne('user', 'email=?', [$email]);
+
                 if ($user !== null) {
                     if (password_verify($password, $user->password)) {
                         $_SESSION['user'] = $user;
@@ -76,7 +69,6 @@ class UserController extends AbstractController
                 } else {
                     header("Location: /?c=user&a=login&f=wrongMail");
                 }
-
             }
         }
     }
