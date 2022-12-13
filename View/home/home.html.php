@@ -11,7 +11,7 @@ if (isset($data['user_project'])) {
 <div class="container">
     <form class="createProjectContainer" action="/?c=project&a=addproject" method="post">
         <input type="text" class="padding-1 margin-top-1" name="titleProject" required minlength="4" placeholder="Nom du projet ...">
-        <input type="submit" name="submit" value="addProject">
+        <input class="padding-1 margin-top-1 margin-left-1" type="submit" name="submit" value="addProject">
     </form>
 
     <div class="projects_container padding-4">
@@ -31,7 +31,6 @@ if (isset($data['user_project'])) {
                             <input type="text" name="titleTask" id="titleTask" placeholder="Nom de la tâche ...">
                             <input id="addTaskButton" type="submit" name="submit" value="Ajouter la tâche">
                         </div>
-
                     </form>
 
                     <div class="allTasksContainer">

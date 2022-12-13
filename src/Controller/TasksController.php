@@ -128,19 +128,18 @@ class TasksController extends AbstractController
         }
 
         $hours = filter_var($_POST['hours'], FILTER_SANITIZE_NUMBER_INT);
-
-        if ($hours !== 0) {
-            $hours = filter_var($_POST['hours'], FILTER_SANITIZE_NUMBER_INT) * 3600;
-        }
-
         $minutes = filter_var($_POST['minutes'], FILTER_SANITIZE_NUMBER_INT);
-
-        if ($minutes !== 0) {
-            $minutes = filter_var($_POST['minutes'], FILTER_SANITIZE_NUMBER_INT) * 60;
-
-        }
-
         $seconds = filter_var($_POST['seconds'], FILTER_SANITIZE_NUMBER_INT);
+
+
+        if ($hours !== 0 && $minutes !== 0 && $seconds !== 0) {
+            $hours = filter_var($_POST['hours'], FILTER_SANITIZE_NUMBER_INT) * 3600;
+            $minutes = filter_var($_POST['minutes'], FILTER_SANITIZE_NUMBER_INT) * 60;
+        }
+        else {
+            header("Location: /?c=home&f=numberEqualTo0");
+            exit;
+        }
 
         if ($hours < 0 || $minutes < 0 || $seconds < 0) {
             header("Location: /?c=home&f=invalidNegativeArgument");
