@@ -16,7 +16,7 @@
             <a href="/?c=user&a=register">Inscription</a>/
             <a href="/?c=user&a=login">Login</a><?php
         }else {?>
-            <a href="/?c=user&a=profil">Profil</a>
+            <a href="/?c=user&a=profil&id=<?= $_SESSION['user']->id ?>">Profil</a>
             <a href="/?c=user&a=logout">Déconnexion</a><?php
         }
         ?>

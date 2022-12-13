@@ -78,4 +78,40 @@ class UserController extends AbstractController
         session_destroy();
         header("Location: /?c=home&f=logout");
     }
+
+    public static function profil (int $id = null) {
+        if (null === $id) {
+            header("Location: /?c=home");
+            exit();
+        }
+        $user = R::findOne('user', 'id=?', [$id]);
+
+        self::render('user/profil', [
+            "user" => $user,
+        ]);
+
+    }
+
+    public static function delete (int $id = null) {
+
+        if (null === $id) {
+            header("Location: /?c=home");
+            exit();
+        }
+
+        if (isset($_POST['submit'])) {
+            $user = R::findOne('user', 'id=?', [$id]);
+
+            if (!$user) {
+                header("Location: /?c=home");
+                exit();
+            }
+
+            R::trash($user);
+            self::logOut();
+        }
+        else {
+            header("Location: /?c=home");
+        }
+    }
 }
