@@ -25,8 +25,15 @@ class UserController extends AbstractController
                 $password = filter_var($_POST['password'], FILTER_SANITIZE_STRING);
                 $password_repeat = filter_var($_POST['password_repeat'], FILTER_SANITIZE_STRING);
 
+                if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    $_SESSION['error'] .= "/Le mail n'est pas au format exemple@exemple.com/";
+                    header("Location: /?c=user&a=register");
+                    exit();
+                }
+
                 if ($password !== $password_repeat) {
-                    header("Location: /?c=user&a=register&f=notEqualPassword");
+                    $_SESSION['error'] .= "/Les mots de passes ne corresponde pas/";
+                    header("Location: /?c=user&a=register");
                     exit();
                 }
 
@@ -40,11 +47,13 @@ class UserController extends AbstractController
 
                     R::store($user);
                 } else {
-                    header("Location: /?c=user&a=register&f=mailExist");
+                    $_SESSION['error'] .= "/L'adresse mail existe déjà/";
+                    header("Location: /?c=user&a=register");
                     exit();
                 }
 
-                header("Location: /?c=user&a=login&f=success");
+                $_SESSION['success'] = "Votre inscription à été validée.";
+                header("Location: /?c=user&a=login");
             }
         }
     }
@@ -61,13 +70,16 @@ class UserController extends AbstractController
                 if ($user !== null) {
                     if (password_verify($password, $user->password)) {
                         $_SESSION['user'] = $user;
-                        header("Location: /?c=home&f=SUCESsLOGINGE");
+                        $_SESSION['success'] = "Connecté avec succès.";
+                        header("Location: /?c=home");
                         exit();
                     } else {
-                        header("Location: /?c=user&a=login&f=ERROrLONGINGE");
+                        $_SESSION['error'] .= "/Mot de passe incorrect/";
+                        header("Location: /?c=user&a=login");
                     }
                 } else {
-                    header("Location: /?c=user&a=login&f=wrongMail");
+                    $_SESSION['error'] .= "/Le compte n'existe pas/";
+                    header("Location: /?c=user&a=login");
                 }
             }
         }
@@ -75,8 +87,9 @@ class UserController extends AbstractController
 
     public static function logOut ()
     {
-        session_destroy();
-        header("Location: /?c=home&f=logout");
+        unset($_SESSION['user']);
+        $_SESSION['success'] .= "/Déconnecté avec succès/";
+        header("Location: /?c=home");
     }
 
     public static function profil (int $id = null) {
@@ -86,9 +99,20 @@ class UserController extends AbstractController
         }
         $user = R::findOne('user', 'id=?', [$id]);
 
-        self::render('user/profil', [
-            "user" => $user,
-        ]);
+        if (!$user) {
+            $_SESSION['error'] = "Error.";
+            header("Location: /?c=home");
+        }
+
+        if ($_SESSION['user']->id === $user->id) {
+            self::render('user/profil', [
+                "user" => $user,
+            ]);
+        }
+        else {
+            $_SESSION['error'] = "Accès refuser.";
+            header("Location: /?c=home");
+        }
 
     }
 
@@ -107,10 +131,19 @@ class UserController extends AbstractController
                 exit();
             }
 
-            R::trash($user);
-            self::logOut();
+            if ($_SESSION['user']->id === $user->id) {
+                R::trash($user);
+                $_SESSION['success'] .= "/Votre compte à été supprimer avec succès/";
+                self::logOut();
+            }
+            else {
+                header("Location: /?c=user&a=profil&id=$id");
+                exit();
+            }
+
         }
         else {
+            $_SESSION['error'] = "Un champ est manquant.";
             header("Location: /?c=home");
         }
     }

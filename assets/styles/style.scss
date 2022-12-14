@@ -251,6 +251,25 @@ button {
 
 }
 
+.error {
+  width: 100%;
+  height: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  color: #FEFEFE;
+  background: #e85c5c;
+  transition: 1s;
+  cursor: pointer;
+}
+
+.success {
+  @extend .error;
+  background: #4f805d;
+}
+
 @media screen and (max-width: 1300px) {
   .project{
     width: 100%;

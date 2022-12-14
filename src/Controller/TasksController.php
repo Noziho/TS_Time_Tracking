@@ -22,31 +22,39 @@ class TasksController extends AbstractController
             header("Location: /?c=home");
             exit();
         }
-        if (isset($_POST['submit'])) {
-            if (self::formIsset('titleTask')) {
-                if (R::findOne('project', 'id=?', [$id])) {
-                    $project = R::findOne('project', 'id=?', [$id]);
+        if (isset($_SESSION['user'])) {
+            if (isset($_POST['submit'])) {
+                if (self::formIsset('titleTask')) {
+                    if (R::findOne('project', 'id=?', [$id])) {
+                        $project = R::findOne('project', 'id=?', [$id]);
+                    }
+                    else {
+                        header("Location: /?c=home&f=projectDontExist");
+                        exit();
+                    }
+
+                    if ($_SESSION['user']->id !== $project->user_id) {
+                        header("Location: /?c=home");
+                        exit();
+                    }
+
+                    $taskname = filter_var($_POST['titleTask'], FILTER_SANITIZE_STRING);
+
+                    $task = R::dispense('task');
+                    $task->taskname = $taskname;
+                    $task->time = 0;
+                    $project->ownTasksList[] = $task;
+
+                    R::store($project);
+
+                    $user = R::findOne('user', 'email=?', [$_SESSION['user']->email]);
+                    self::render('home/home', [
+                        'user_project' => $user->ownProjectList,
+                    ]);
                 }
-                else {
-                    header("Location: /?c=home&f=projectDontExist");
-                    exit();
-                }
-                $taskname = filter_var($_POST['titleTask'], FILTER_SANITIZE_STRING);
-
-                $task = R::dispense('task');
-                $task->taskname = $taskname;
-                $task->time = 0;
-                $project->ownTasksList[] = $task;
-
-
-                R::store($project);
-
-                $user = R::findOne('user', 'email=?', [$_SESSION['user']->email]);
-                self::render('home/home', [
-                    'user_project' => $user->ownProjectList,
-                ]);
             }
         }
+
     }
 
     /**
@@ -90,6 +98,9 @@ class TasksController extends AbstractController
         exit;
     }
 
+    /**
+     * @throws SQL
+     */
     public static function deleteTask (int $id = null, int $pId = null)
     {
         if (null === $id || null === $pId) {
@@ -99,12 +110,28 @@ class TasksController extends AbstractController
 
         $task = R::findOne('task', 'id=?', [$id]);
 
+        $project = R::findOne('project', 'id=?', [$task->project_id]);
+
+        $project->project_time = $project->project_time - $task->time;
+
+
         if (!$task) {
             header("Location: /?c=home");
             exit;
         }
 
+        if ($task->project_id !== $project->id) {
+            header("Location: /?c=home");
+            exit;
+        }
+
+        if ($project->user_id !== $_SESSION['user']->id) {
+            header("Location: /?c=home");
+            exit;
+        }
+
         R::trash($task);
+        R::store($project);
 
         ProjectController::showProject($pId);
     }
@@ -118,9 +145,22 @@ class TasksController extends AbstractController
             header("Location: /?c=home");
             exit;
         }
+
         $task = R::findOne('task', 'id=?', [$id]);
 
+        $project = R::findOne('project', 'id=?', [$task->project_id]);
+
         if (!$task) {
+            header("Location: /?c=home");
+            exit;
+        }
+
+        if ($task->project_id !== $project->id) {
+            header("Location: /?c=home");
+            exit;
+        }
+
+        if ($project->user_id !== $_SESSION['user']->id) {
             header("Location: /?c=home");
             exit;
         }
