@@ -10,7 +10,7 @@ if (isset($data['project'])) {
 
 <div class="container">
     <div class="projects_container">
-        <div class="project">
+        <div class="projectDetails">
             <div class="containerTitleProject">
                 <h2><?= $project->project_name ?></h2>
             </div>
