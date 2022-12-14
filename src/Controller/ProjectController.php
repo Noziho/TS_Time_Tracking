@@ -37,12 +37,12 @@ class ProjectController extends AbstractController
                 }
             }
             else {
-                $_SESSION['error'] .= "/Un champ est manquant/";
+                $_SESSION['error'] = "/Un champ est manquant/";
                 header("Location: /?c=home");
             }
         }
         else {
-            $_SESSION['error'] .= "/Veuillez vous connecter pour ajouter un projet/";
+            $_SESSION['error'] = "/Veuillez vous connecter pour ajouter un projet/";
             header("Location: /?c=home");
         }
     }

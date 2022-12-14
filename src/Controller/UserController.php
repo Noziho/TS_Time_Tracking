@@ -29,13 +29,13 @@ class UserController extends AbstractController
                 self::checkRange($password, 8, 40,'/?c=user&a=register', '/La longueur du mot de passe doit-être compris entre 8 et 40 caractères' );
 
                 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                    $_SESSION['error'] .= "/Le mail n'est pas au format exemple@exemple.com/";
+                    $_SESSION['error'] = "/Le mail n'est pas au format exemple@exemple.com/";
                     header("Location: /?c=user&a=register");
                     exit();
                 }
 
                 if ($password !== $password_repeat) {
-                    $_SESSION['error'] .= "/Les mots de passes ne corresponde pas/";
+                    $_SESSION['error'] = "/Les mots de passes ne corresponde pas/";
                     header("Location: /?c=user&a=register");
                     exit();
                 }
@@ -50,7 +50,7 @@ class UserController extends AbstractController
 
                     R::store($user);
                 } else {
-                    $_SESSION['error'] .= "/L'adresse mail existe déjà/";
+                    $_SESSION['error'] = "/L'adresse mail existe déjà/";
                     header("Location: /?c=user&a=register");
                     exit();
                 }
@@ -77,11 +77,11 @@ class UserController extends AbstractController
                         header("Location: /?c=home");
                         exit();
                     } else {
-                        $_SESSION['error'] .= "/Mot de passe incorrect/";
+                        $_SESSION['error'] = "/Mot de passe incorrect/";
                         header("Location: /?c=user&a=login");
                     }
                 } else {
-                    $_SESSION['error'] .= "/Le compte n'existe pas/";
+                    $_SESSION['error'] = "/Le compte n'existe pas/";
                     header("Location: /?c=user&a=login");
                 }
             }
@@ -91,7 +91,12 @@ class UserController extends AbstractController
     public static function logOut ()
     {
         unset($_SESSION['user']);
-        $_SESSION['success'] .= "/Déconnecté avec succès/";
+        if (!isset($_SESSION['success'])) {
+            $_SESSION['success'] = "/Déconnecté avec succès/";
+        }
+        else {
+            $_SESSION['success'] .= "/Déconnecté avec succès/";
+        }
         header("Location: /?c=home");
     }
 
@@ -136,7 +141,7 @@ class UserController extends AbstractController
 
             if ($_SESSION['user']->id === $user->id) {
                 R::trash($user);
-                $_SESSION['success'] .= "/Votre compte à été supprimer avec succès/";
+                $_SESSION['success'] = "/Votre compte à été supprimer avec succès/";
                 self::logOut();
             }
             else {
