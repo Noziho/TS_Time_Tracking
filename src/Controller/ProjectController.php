@@ -22,6 +22,9 @@ class ProjectController extends AbstractController
                 if (self::formIsset('titleProject')) {
                     $user = R::findOne('user', 'email=?', [$_SESSION['user']->email]);
                     $project_name = filter_var($_POST['titleProject'], FILTER_SANITIZE_STRING);
+
+                    self::checkRange($project_name, 4, 20, '/?c=home', 'La longueur du titre de projet doit-être comprise entre 4 et 20 caractères');
+
                     $project = R::dispense('project');
                     $project->project_name = $project_name;
                     $project->project_time = 0;
@@ -68,7 +71,7 @@ class ProjectController extends AbstractController
         if (isset($_POST['submit'])) {
             R::trash($project);
             $_SESSION['success'] = "Projet supprimer avec succès.";
-            header("Location: /?c=home&f=deleteSuccess");
+            header("Location: /?c=home");
         }
     }
 

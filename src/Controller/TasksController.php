@@ -169,6 +169,12 @@ class TasksController extends AbstractController
         $minutes = filter_var($_POST['minutes'], FILTER_SANITIZE_NUMBER_INT);
         $seconds = filter_var($_POST['seconds'], FILTER_SANITIZE_NUMBER_INT);
 
+        if (!filter_var($hours, FILTER_VALIDATE_INT) || !filter_var($minutes, FILTER_VALIDATE_INT) || !filter_var($seconds, FILTER_VALIDATE_INT)) {
+            $_SESSION['error'] = "/Les valeurs entrées pour modifier le temps ne sont pas des nombres/";
+            ProjectController::showProject($project->id);
+            exit();
+        }
+
 
         if ($hours !== 0 && $minutes !== 0 && $seconds !== 0) {
             $hours = filter_var($_POST['hours'], FILTER_SANITIZE_NUMBER_INT) * 3600;

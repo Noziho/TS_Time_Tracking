@@ -69,8 +69,15 @@ abstract class AbstractController
                 $minutes = 0;
             }
         }
+    }
 
-
+    public static function checkRange(string $value, int $min, int $max, string $redirect, string $errorMessage): void
+    {
+        if (strlen($value) < $min || strlen($value) > $max) {
+            $_SESSION['error'] .= $errorMessage;
+            header("Location: " . $redirect);
+            exit();
+        }
     }
 
 }

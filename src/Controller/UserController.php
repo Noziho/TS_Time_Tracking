@@ -25,6 +25,9 @@ class UserController extends AbstractController
                 $password = filter_var($_POST['password'], FILTER_SANITIZE_STRING);
                 $password_repeat = filter_var($_POST['password_repeat'], FILTER_SANITIZE_STRING);
 
+                self::checkRange($email, 6, 150, '/?c=user&a=register', '/La longueur de l\'email doit-être comprise entre 6 et 150 caractères');
+                self::checkRange($password, 8, 40,'/?c=user&a=register', '/La longueur du mot de passe doit-être compris entre 8 et 40 caractères' );
+
                 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                     $_SESSION['error'] .= "/Le mail n'est pas au format exemple@exemple.com/";
                     header("Location: /?c=user&a=register");

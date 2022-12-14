@@ -10,7 +10,7 @@ if (isset($data['user_project'])) {
 
 <div class="container">
     <form class="createProjectContainer" action="/?c=project&a=addproject" method="post">
-        <input type="text" class="padding-1 margin-top-1" name="titleProject" required minlength="4" placeholder="Nom du projet ...">
+        <input type="text" class="padding-1 margin-top-1" name="titleProject" required minlength="4" maxlength="20" placeholder="Nom du projet ...">
         <input class="padding-1 margin-top-1 margin-left-1" type="submit" name="submit" value="addProject">
     </form>
 
@@ -69,7 +69,7 @@ if (isset($data['user_project'])) {
         }
         else {?>
             <div>
-                <h2>Bienvenue sur time tracker, pour accéder à nos fonctionnalités veuillez vous inscrire.</h2>
+                <h2>Bienvenue sur time tracker, pour accéder à nos fonctionnalités, veuillez vous inscrire.</h2>
             </div>
 
         <?php
